@@ -8,6 +8,7 @@ module.exports = {
     'eslint:recommended',
     '@vue/eslint-config-typescript',
   ],
+  ignorePatterns: ['public/canvas/canvas-customization.js', 'public/canvas/index.js'],
   rules: {
     '@typescript-eslint/no-unused-vars': 2,
     'vue/multi-word-component-names': 'off',
