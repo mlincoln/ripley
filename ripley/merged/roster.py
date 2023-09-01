@@ -83,7 +83,7 @@ def canvas_site_roster_csv(canvas_site_id):
     }
 
 
-def _merge_photo_urls(students):
+def _merge_photo_urls(students, show_waitlisted=False):
     def _photo_key(student):
         return f"{app.config['DATA_LOCH_S3_PHOTO_PATH']}/{student['uid']}.jpg"
 
@@ -93,7 +93,10 @@ def _merge_photo_urls(students):
         expiration=app.config['PHOTO_SIGNED_URL_EXPIRES_IN_SECONDS'],
     )
     for student in students:
-        student['photoUrl'] = photo_urls.get(_photo_key(student), None)
+        if student['enrollStatus'] != 'W' or show_waitlisted:
+            student['photoUrl'] = photo_urls.get(_photo_key(student), None)
+        else:
+            student['photoUrl'] = None
 
 
 def _section(canvas_section):
