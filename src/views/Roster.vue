@@ -100,8 +100,18 @@
             </div>
           </v-col>
         </v-row>
-        <v-row>
-          <v-col role="alert" aria-live="polite" class="py-1">{{ pluralize('student', students.length, {0: 'No', 1: 'One'}) }} found</v-col>
+        <v-row no-gutters class="display-none-when-print" justify="end">
+          <div class="d-flex flex-wrap float-right pr-2">
+            <v-checkbox
+              v-model="showOnePhotoPerPage"
+              label="Print one student per page"
+              density="comfortable"
+            >
+            </v-checkbox>
+          </div>
+        </v-row>
+        <v-row v-if="students.length">
+          <v-col role="alert" aria-live="polite" class="py-1 display-none-when-print">{{ pluralize('student', students.length, {0: 'No', 1: 'One'}) }} found</v-col>
         </v-row>
         <v-row no-gutters>
           <v-col sm="12">
