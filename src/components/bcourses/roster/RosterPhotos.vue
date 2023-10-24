@@ -1,6 +1,6 @@
 <template>
   <ul
-    class="text-center"
+    class="pa-0 text-center"
     :class="`override-flex-${showOnePhotoPerPage ? 1 : 'all'}`"
     style="display: flex; flex-wrap: wrap; width: 100%; padding-top: 1rem; margin-left: 1rem"
   >
