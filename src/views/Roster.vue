@@ -26,7 +26,11 @@
       </v-alert>
       <v-container v-if="!error" fluid>
         <v-row align-v="center" class="display-none-when-print">
-          <v-col class="pr-2 roster-column-when-print" sm="3">
+          <v-col
+            class="pr-2 roster-column-when-print"
+            md="3"
+            sm="12"
+          >
             <label for="roster-search" class="sr-only">Input automatically searches upon text entry</label>
             <v-text-field
               id="roster-search"
@@ -39,7 +43,7 @@
               variant="outlined"
             />
           </v-col>
-          <v-col sm="3">
+          <v-col md="5" sm="12">
             <div v-if="roster.sections">
               <select
                 id="section-select"
@@ -58,7 +62,7 @@
               </select>
             </div>
           </v-col>
-          <v-col class="pt-3" cols="auto" sm="6">
+          <v-col class="pt-3" md="4" sm="12">
             <div class="d-flex flex-wrap float-right">
               <div class="pr-2">
                 <v-btn
