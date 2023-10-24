@@ -9,7 +9,7 @@
     eager
     :lazy-src="photoPlaceholder"
     width="72"
-    :transition="null"
+    transition="none"
     :src="photoUrl"
     @error="imageError"
     @load="onLoad"
