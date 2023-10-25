@@ -84,7 +84,7 @@ class User(UserMixin):
 
     @property
     def canvas_user_id(self):
-        return self.user['canvasUserId']
+        return self.user.get('canvasUserId')
 
     def get_id(self):
         return self.get_serialized_composite_key(
@@ -226,4 +226,4 @@ class User(UserMixin):
         return dict(sorted(api_json.items()))
 
     def _get_cache_key(self):
-        return f'user_session_{self.uid}' if self.uid else None
+        return f'user_session_{self.uid}_{self.canvas_site_id}' if self.uid else None

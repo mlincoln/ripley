@@ -228,6 +228,7 @@ def _get_custom_param(lti_data, key):
 def _launch_tool(target_uri):
     lti_config_path = app.config['LTI_CONFIG_PATH']
     flask_request = FlaskRequest()
+    app.logger.info(f"LTI launch initiated: {app.config['REMEMBER_COOKIE_NAME']}={flask_request.get_cookie(app.config['REMEMBER_COOKIE_NAME'])}")
     try:
         tool_conf = ToolConfJsonFile(lti_config_path)
         launch_data_storage = FlaskCacheDataStorage(cache)
