@@ -62,6 +62,10 @@ class User(UserMixin):
                     uid={self.user['uid']},
                 """
 
+    def __str__(self):
+        if (self.user):
+            return f'UID {self.uid}, canvas_user_id {self.canvas_user_id}, canvas_site_id {self.canvas_site_id}'
+
     @property
     def can_create_canvas_course_site(self):
         return self.is_admin or self.is_canvas_admin or self.is_current_campus_instructor()

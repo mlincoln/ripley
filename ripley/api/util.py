@@ -97,17 +97,15 @@ def csv_download_response(rows, filename, fieldnames=None):
 
 
 def start_login_session(user):
-    user_str = f'UID {user.uid}, canvas_user_id {user.canvas_user_id}, canvas_site_id {user.canvas_site_id}'
-    current_user_str = f'UID {current_user.uid}, Canvas ID {current_user.canvas_user_id}, course ID {current_user.canvas_site_id}'
     if current_user.is_authenticated and current_user.uid == user.uid:
-        app.logger.debug(f'User ({user_str}) has existing Ripley session: {current_user_str}')
+        app.logger.debug(f'User ({str(user)}) has existing Ripley session ({str(current_user)})')
     else:
         if current_user.is_authenticated:
-            app.logger.info(f"""User ({user_str}) does not match existing session ({current_user_str}). Terminating existing session.""")
+            app.logger.info(f"""User ({str(user)}) does not match existing session ({str(current_user)}). Terminating existing session.""")
             logout_user()
         else:
-            app.logger.debug(f'User ({user_str}) has no existing Ripley session')
-    app.logger.info(f"""Starting login session for {user.uid}""")
+            app.logger.debug(f'User ({str(user)}) has no existing Ripley session')
+    app.logger.info(f"""Starting login session for UID {user.uid}""")
     authenticated = login_user(user, force=True, remember=True) and current_user.is_authenticated
     return authenticated if _is_safe_url(request.args.get('next')) else abort(400)
 
