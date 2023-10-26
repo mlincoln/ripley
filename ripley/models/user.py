@@ -62,6 +62,10 @@ class User(UserMixin):
                     uid={self.user['uid']},
                 """
 
+    def __str__(self):
+        if (self.user):
+            return f'UID {self.uid}, canvas_user_id {self.canvas_user_id}, canvas_site_id {self.canvas_site_id}'
+
     @property
     def can_create_canvas_course_site(self):
         return self.is_admin or self.is_canvas_admin or self.is_current_campus_instructor()
@@ -84,7 +88,7 @@ class User(UserMixin):
 
     @property
     def canvas_user_id(self):
-        return self.user['canvasUserId']
+        return self.user.get('canvasUserId')
 
     def get_id(self):
         return self.get_serialized_composite_key(
@@ -226,4 +230,4 @@ class User(UserMixin):
         return dict(sorted(api_json.items()))
 
     def _get_cache_key(self):
-        return f'user_session_{self.uid}' if self.uid else None
+        return f'user_session_{self.uid}_{self.canvas_site_id}' if self.uid else None

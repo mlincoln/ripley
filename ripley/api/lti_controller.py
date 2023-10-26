@@ -238,9 +238,9 @@ def _launch_tool(target_uri):
         canvas_masquerading_user_id = _get_custom_param(launch_data, 'canvas_masquerading_user_id')
         canvas_user_id = _get_custom_param(launch_data, 'canvas_user_id')
         uid = _get_custom_param(launch_data, 'canvas_user_login_id')
-        masquerade = f'Canvas ID {canvas_masquerading_user_id} acting as ' if canvas_masquerading_user_id else ''
-        course_context = f', course id {canvas_site_id}' if canvas_site_id else ''
-
+        masquerading = f'Canvas ID {canvas_masquerading_user_id} acting as ' if canvas_masquerading_user_id else ''
+        app.logger.debug(f'LTI launch initiated with params canvas_masquerading_user_id={canvas_masquerading_user_id}, \
+                         canvas_user_login_id={uid}, canvas_user_id={canvas_user_id}, canvas_site_id={canvas_site_id}')
         user_id = User.get_serialized_composite_key(
             canvas_site_id=canvas_site_id,
             uid=uid,
@@ -248,7 +248,7 @@ def _launch_tool(target_uri):
         )
         user = User(user_id)
         if start_login_session(user):
-            app.logger.info(f'Logged in during LTI launch as {masquerade}UID {uid}, Canvas ID {canvas_user_id}{course_context}')
+            app.logger.info(f'Logged in during LTI launch as {masquerading}({str(user)})')
             return redirect(f'/{target_uri}')
         else:
             return redirect_unauthorized(user)
