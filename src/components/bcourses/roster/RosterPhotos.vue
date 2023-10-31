@@ -65,6 +65,7 @@
 <script>
 import Context from '@/mixins/Context'
 import OutboundLink from '@/components/utils/OutboundLink'
+import photoUnavailable from '@/assets/images/photo_unavailable.svg'
 import RosterPhoto from '@/components/bcourses/roster/RosterPhoto'
 import {each, trim, truncate} from 'lodash'
 
@@ -97,11 +98,7 @@ export default {
   methods: {
     loadPhoto(student) {
       const photoUrl = trim(student.photoUrl || '')
-      if (photoUrl) {
-        this.photoUrls[student.studentId] = photoUrl.startsWith('http') ? photoUrl : `${this.config.apiBaseUrl}${photoUrl}`
-      } else {
-        this.imageError()
-      }
+      this.photoUrls[student.studentId] = photoUrl ? photoUrl.startsWith('http') ? photoUrl : `${this.config.apiBaseUrl}${photoUrl}` : photoUnavailable
     },
     reloadPhotos() {
       each(this.students, this.loadPhoto)
