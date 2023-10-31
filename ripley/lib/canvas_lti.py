@@ -116,7 +116,7 @@ def lti_tool_definitions():
                 'placement': 'account_navigation',
             },
             'roster_photos': {
-                'name': 'Roster Photos (LTI 1.3)',
+                'name': 'Roster Photos',
                 'account_id': app.config['CANVAS_COURSES_ACCOUNT_ID'],
                 'client_id': '10720000000000628',
                 'description': 'Browse and search official roster photos',
