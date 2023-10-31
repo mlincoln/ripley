@@ -140,7 +140,7 @@ class TestGetRosterPhotosConfig:
             app,
             config_uri='roster_photos.json',
             target='launch_roster_photos',
-            expected_title='Roster Photos (LTI 1.3)',
+            expected_title='Roster Photos',
             expected_description='Browse and search official roster photos',
             expected_placement='course_navigation',
         )
