@@ -10,7 +10,7 @@
     :lazy-src="photoPlaceholder"
     width="72"
     transition="none"
-    :src="photoUrl"
+    :src="photoSrc"
     @error="imageError"
     @load="onLoad"
   >
@@ -19,11 +19,11 @@
 
 <script setup>
 import photoPlaceholder from '@/assets/images/roster_photo_placeholder.svg'
-import photoUnavailable from '@/assets/images/photo_unavailable.svg'
 </script>
 
 <script>
 import Context from '@/mixins/Context'
+import photoUnavailable from '@/assets/images/photo_unavailable.svg'
 
 export default {
   name: 'RosterPhoto',
