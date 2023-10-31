@@ -101,6 +101,7 @@ html, body {
   html,
   body {
     height: fit-content;
+    overflow: visible;
     *.display-none-when-print {
       display: none;
     }
