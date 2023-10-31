@@ -1,14 +1,10 @@
 <template>
-  <ul
-    class="pa-0 text-center"
-    :class="`override-flex-${showOnePhotoPerPage ? 1 : 'all'}`"
-    style="display: flex; flex-wrap: wrap; width: 100%; padding-top: 1rem; margin-left: 1rem"
-  >
+  <ul class="pa-0 photo-list text-center">
     <li
       v-for="student in students"
       :key="student.studentId"
-      :class="`show-one-photo-per-page-${showOnePhotoPerPage ? 1 : 'all'}`"
-      style="display: flex; height: auto; padding: 5px; width: 173px;"
+      class="photo-wrapper"
+      :class="showOnePhotoPerPage ? 'photo-wrapper-one-per-page' : ''"
     >
       <v-card
         :border="false"
@@ -131,8 +127,17 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.v-card-roster-photo {
-  width: 140px !important;
+.photo-list {
+  display: block;
+  margin-left: 1rem;
+  padding-top: 1rem;
+  width: 100%;
+}
+.photo-wrapper {
+  display: inline-block;
+  float: left;
+  padding: 5px;
+  width: 173px;
 }
 
 @media print {
@@ -146,16 +151,19 @@ export default {
   }
   *.v-card-roster-photo {
     margin: 0 !important;
-    width: 173px !important;
   }
-  .override-flex-1 {
-    flex-direction: column;
+  .photo-wrapper {
+    width: 200px;
   }
-  .show-one-photo-per-page-1 {
+  .photo-wrapper-one-per-page {
+    display: block;
+    float: none;
     page-break-after: always;
+    width: 300px;
   }
-  .show-one-photo-per-page-1:last-child {
+  .photo-wrapper-one-per-page:last-child {
     page-break-after: avoid;
   }
 }
+
 </style>

@@ -4,11 +4,9 @@
     :alt="`Photo of ${student.firstName} ${student.lastName}`"
     :aria-label="`Photo of ${student.firstName} ${student.lastName}`"
     class="photo"
-    :class="`photo-${showOnePhotoPerPage ? 1 : 'all'}`"
-    cover
+    :class="showOnePhotoPerPage ? 'photo-one-per-page' : ''"
     eager
     :lazy-src="photoPlaceholder"
-    width="72"
     transition="none"
     :src="photoUrl"
     @error="imageError"
@@ -71,16 +69,16 @@ export default {
 
 <style scoped>
 .photo {
+  height: 96px;
   margin: 0 auto;
-  min-height: 96px;
+  width: auto;
 }
 @media print {
-  .photo-all {
-    height: 72px;
+  .photo {
+    height: 147px;
   }
-  .photo-1 {
-    height: 250px !important;
-    width: 250px !important;
+  .photo-one-per-page {
+    height: 400px;
   }
 }
 </style>
