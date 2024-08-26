@@ -96,7 +96,7 @@ def lti_tool_definitions():
                 'client_id': '10720000000000632',
                 'description': 'In-progress pilot project',
                 'placement': 'course_navigation',
-                'default': 'disabled',
+                'default': 'enabled',
                 'visibility': 'admins',
             },
             'mailing_list': {

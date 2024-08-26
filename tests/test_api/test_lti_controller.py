@@ -94,7 +94,7 @@ class TestGetGradeDistributionConfig:
             app,
             client,
             config_uri='grade_distribution.json',
-            expected_default='disabled',
+            expected_default='enabled',
             expected_description='In-progress pilot project',
             expected_placement='course_navigation',
             expected_title='Grade Distribution',
