@@ -117,7 +117,7 @@ def lti_tool_definitions():
                 'visibility': 'admins',
             },
             'manage_sites': {
-                'name': 'Manage Sites',
+                'name': 'Create & Manage Sites',
                 'account_id': app.config['CANVAS_BERKELEY_ACCOUNT_ID'],
                 'client_id': '10720000000000625',
                 'description': 'Create or update bCourses sites',

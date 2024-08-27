@@ -64,7 +64,7 @@ class TestManageSitesConfig:
             config_uri='manage_sites.json',
             expected_description='Create or update bCourses sites',
             expected_placement='user_navigation',
-            expected_title='Manage Sites',
+            expected_title='Create & Manage Sites',
             target='launch_manage_sites',
         )
 
