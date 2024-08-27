@@ -186,20 +186,28 @@ export default {
   data: () => ({
     chartSettings: {},
     demographicOptions: {
+      divider1: {
+        label: '─────',
+        options: []
+      },
       'genders.female': {
-        label: 'Female',
+        label: 'Female Students',
         options: []
       },
       'genders.male': {
-        label: 'Male',
+        label: 'Male Students',
         options: []
       },
       'genders.other': {
-        label: 'Other Gender',
+        label: 'Gender: Decline to State, Different Identity, or Genderqueer/Gender Non-Conform',
+        options: []
+      },
+      divider2: {
+        label: '─────',
         options: []
       },
       underrepresentedMinorityStatus: {
-        label: 'Underrepresented Minority',
+        label: 'Underrepresented Minority Students',
         options: []
       },
       internationalStatus: {

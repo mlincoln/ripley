@@ -16,16 +16,19 @@
         <dl class="font-size-13">
           <template v-if="showDemographics">
             <template class="d-block my-2">
-              <dt class="font-italic d-inline">Other Gender</dt>&mdash;<dd class="d-inline">students of nonbinary or different identity gender</dd>
+              <dt class="font-italic d-inline">Female / Male / Decline to State, Different Identity, Genderqueer/Gender Non-Conform</dt>&mdash;<dd class="d-inline">the student's gender in the student information system</dd>
             </template>
             <template class="d-block my-2">
-              <dt class="font-italic d-inline">Underrepresented Minority</dt>&mdash;<dd class="d-inline">identified as African American, Chicano/Latino, Native American/Alaska Native, or Pacific Islander</dd>
+              <dt class="font-italic d-inline">Underrepresented Minority Students</dt>&mdash;<dd class="d-inline">identified as African American, Chicano/Latino, Native American/Alaska Native, or Pacific Islander</dd>
             </template>
             <template class="d-block my-2">
               <dt class="font-italic d-inline">International Students</dt>&mdash;<dd class="d-inline">students with a valid VISA status. Includes both self-reported and verified data</dd>
             </template>
             <template class="d-block my-2">
               <dt class="font-italic d-inline">Transfer Students</dt>&mdash;<dd class="d-inline">students who completed coursework during a regular session at another college or university after high school</dd>
+            </template>
+            <template class="d-block my-2">
+              <dt class="font-italic d-inline">Student Athletes</dt>&mdash;<dd class="d-inline">data is only available for active students, so these values may change over time</dd>
             </template>
             <template class="d-block my-2">
               <dt class="font-italic d-inline">Grade Scales</dt>&mdash;
