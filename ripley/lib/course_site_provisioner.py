@@ -149,12 +149,14 @@ def provision_course_site(uid, site_name, site_abbreviation, term_slug, section_
             role_id=role_id,
         )
 
-    # Background enrollment update
+    course_site_url = f"{app.config['CANVAS_API_URL']}/courses/{course.id}"
     job = get_current_job()
     if job:
         job = get_current_job()
-        job.meta['courseSiteUrl'] = f"{app.config['CANVAS_API_URL']}/courses/{course.id}"
+        job.meta['courseSiteUrl'] = course_site_url
         job.save_meta()
+
+    # Background enrollment update
     update_section_enrollments(
         all_sections=canvas_section_payload,
         course=course,
@@ -162,6 +164,8 @@ def provision_course_site(uid, site_name, site_abbreviation, term_slug, section_
         sis_import=sis_import,
         sis_term_id=sis_term_id,
     )
+
+    return course_site_url
 
 
 def _enroll_user_in_canvas_section(canvas_sis_section_id, canvas_user_profile, role_id):
