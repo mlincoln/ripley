@@ -323,7 +323,7 @@ export default {
         each(this.gradeDistribution, item => {
           const value = get(item, `${group}.${option}`) || get(item, `${group}`)
           const count = get(value, 'count', 0)
-          secondarySeries.data.push({
+          const point = {
             custom: {
               count: count === null ? 'Small sample size' : count
             },
@@ -331,7 +331,14 @@ export default {
               enabled: false
             },
             y: value ? round(get(value, 'averageGradePoints'), 1) : null
-          })
+          }
+          if (count === null) {
+            point.marker = {
+              lineWidth: 1,
+              radius: 3
+            }
+          }
+          secondarySeries.data.push(point)
         })
         this.chartSettings.series[1] = secondarySeries
       } else if (this.chartSettings.series.length > 1) {
