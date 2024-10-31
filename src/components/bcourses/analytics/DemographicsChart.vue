@@ -126,14 +126,24 @@
                   :id="`grade-distro-demo-table-row-${index}-grade-1`"
                   class="py-1"
                 >
-                  {{ chartSettings.series[1]['data'][index].y || 'No data' }}
+                  <em v-if="chartSettings.series[1]['data'][index].custom.count === 'Small sample size'">
+                    {{ chartSettings.series[1]['data'][index].y }}
+                  </em>
+                  <span v-if="chartSettings.series[1]['data'][index].custom.count !== 'Small sample size'">
+                    {{ chartSettings.series[1]['data'][index].y || 'No data' }}
+                  </span>
                 </td>
                 <td
                   v-if="size(chartSettings.series) > 1"
                   :id="`grade-distro-demo-table-row-${index}-count-1`"
                   class="text-right py-1"
                 >
-                  {{ chartSettings.series[1]['data'][index].custom.count || 'No data' }}
+                  <em v-if="chartSettings.series[1]['data'][index].custom.count === 'Small sample size'">
+                    Small sample size
+                  </em>
+                  <span v-if="chartSettings.series[1]['data'][index].custom.count !== 'Small sample size'">
+                    {{ chartSettings.series[1]['data'][index].custom.count || 'No data' }}
+                  </span>
                 </td>
               </tr>
             </tbody>
@@ -320,7 +330,7 @@ export default {
             dataLabels: {
               enabled: false
             },
-            y: round(get(value, 'averageGradePoints', 0), 1)
+            y: value ? round(get(value, 'averageGradePoints'), 1) : null
           }
           if (count === null) {
             point.marker = {
@@ -346,6 +356,7 @@ export default {
           return`${tooltipText}<div id="grade-dist-demo-tooltip-series-${index}" class="font-size-13 mt-1">
             <span aria-hidden="true" class="font-size-16" style="color:${point.color}">\u25AC</span>
             ${point.series.name}: <span class="font-weight-bold">${point.y}</span>
+            (${point.point.custom.count === 'Small sample size' ? 'Small sample size' : point.point.custom.count + ' students' })
           </div>`
         }, header)
       }
