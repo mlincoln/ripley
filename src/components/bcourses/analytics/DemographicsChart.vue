@@ -126,14 +126,24 @@
                   :id="`grade-distro-demo-table-row-${index}-grade-1`"
                   class="py-1"
                 >
-                  {{ chartSettings.series[1]['data'][index].y || 'No data' }}
+                  <em v-if="chartSettings.series[1]['data'][index].custom.count === 'Small sample size'">
+                    {{ chartSettings.series[1]['data'][index].y }}
+                  </em>
+                  <span v-if="chartSettings.series[1]['data'][index].custom.count !== 'Small sample size'">
+                    {{ chartSettings.series[1]['data'][index].y || 'No data' }}
+                  </span>
                 </td>
                 <td
                   v-if="size(chartSettings.series) > 1"
                   :id="`grade-distro-demo-table-row-${index}-count-1`"
                   class="text-right py-1"
                 >
-                  {{ chartSettings.series[1]['data'][index].custom.count || 'No data' }}
+                  <em v-if="chartSettings.series[1]['data'][index].custom.count === 'Small sample size'">
+                    Small sample size
+                  </em>
+                  <span v-if="chartSettings.series[1]['data'][index].custom.count !== 'Small sample size'">
+                    {{ chartSettings.series[1]['data'][index].custom.count || 'No data' }}
+                  </span>
                 </td>
               </tr>
             </tbody>
