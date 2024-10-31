@@ -320,7 +320,7 @@ export default {
             dataLabels: {
               enabled: false
             },
-            y: round(get(value, 'averageGradePoints', 0), 1)
+            y: value ? round(get(value, 'averageGradePoints'), 1) : null
           })
         })
         this.chartSettings.series[1] = secondarySeries
