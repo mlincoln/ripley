@@ -330,7 +330,7 @@ export default {
             dataLabels: {
               enabled: false
             },
-            y: value ? round(get(value, 'averageGradePoints'), 1) : null
+            y: (value && count !== 0) ? round(get(value, 'averageGradePoints'), 1) : null
           }
           if (count === null) {
             point.marker = {
