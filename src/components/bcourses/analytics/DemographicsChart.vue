@@ -349,6 +349,7 @@ export default {
           return`${tooltipText}<div id="grade-dist-demo-tooltip-series-${index}" class="font-size-13 mt-1">
             <span aria-hidden="true" class="font-size-16" style="color:${point.color}">\u25AC</span>
             ${point.series.name}: <span class="font-weight-bold">${point.y}</span>
+            (${point.point.custom.count === 'Small sample size' ? 'Small sample size' : point.point.custom.count + ' students' })
           </div>`
         }, header)
       }
