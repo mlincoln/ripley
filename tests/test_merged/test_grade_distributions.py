@@ -32,122 +32,143 @@ class TestGradeDistributions:
     def test_get_grade_distributions(self, app):
         with override_config(app, 'NEWT_SMALL_CELL_THRESHOLD', 0), override_config(app, 'NEWT_MINIMUM_CLASS_SIZE', 0):
             demographics_distribution, grade_distribution = get_grade_distributions('2228', ['99999'])
-            assert demographics_distribution == [
-                {
-                    'athleteStatus': {
-                        'false': {
-                            'averageGradePoints': 2.2333333333333334,
-                            'count': 3,
-                        },
-                        'true': {
-                            'averageGradePoints': 0,
-                            'count': 0,
-                        },
+            assert len(demographics_distribution) == 2
+            assert demographics_distribution[0] == {
+                'athleteStatus': {
+                    'false': {
+                        'averageGradePoints': 2.233,
+                        'count': 3,
+                        'medianGradePoints': 2,
                     },
-                    'averageGradePoints': 2.2333333333333334,
-                    'count': 3,
-                    'courseName': 'ASTRON 218',
-                    'genders': {
-                        'female': {
-                            'averageGradePoints': 2.2333333333333334,
-                            'count': 3,
-                        },
-                    },
-                    'internationalStatus': {
-                        'false': {
-                            'averageGradePoints': 2.2333333333333334,
-                            'count': 3,
-                        },
-                        'true': {
-                            'averageGradePoints': 0,
-                            'count': 0,
-                        },
-                    },
-                    'termId': '2225',
-                    'termName': 'Summer 2022',
-                    'transferStatus': {
-                        'false': {
-                            'averageGradePoints': 2.2333333333333334,
-                            'count': 3,
-                        },
-                        'true': {
-                            'averageGradePoints': 0,
-                            'count': 0,
-                        },
-                    },
-                    'underrepresentedMinorityStatus': {
-                        'false': {
-                            'averageGradePoints': 0,
-                            'count': 0,
-                        },
-                        'true': {
-                            'averageGradePoints': 2.2333333333333334,
-                            'count': 3,
-                        },
+                    'true': {
+                        'averageGradePoints': 0,
+                        'count': 0,
+                        'medianGradePoints': 0,
                     },
                 },
-                {
-                    'athleteStatus': {
-                        'false': {
-                            'averageGradePoints': 3.860493827160494,
-                            'count': 81,
-                        },
-                        'true': {
-                            'averageGradePoints': 3.85,
-                            'count': 2,
-                        },
-                    },
-                    'averageGradePoints': 3.8602409638554214,
-                    'count': 83,
-                    'courseName': 'ASTRON 218',
-                    'genders': {
-                        'female': {
-                            'averageGradePoints': 3.9317460317460315,
-                            'count': 63,
-                        },
-                        'male': {
-                            'averageGradePoints': 3.615789473684211,
-                            'count': 19,
-                        },
-                        'other': {
-                            'averageGradePoints': 4.0,
-                            'count': 1,
-                        },
-                    },
-                    'internationalStatus': {
-                        'false': {
-                            'averageGradePoints': 3.9119402985074623,
-                            'count': 67,
-                        },
-                        'true': {
-                            'averageGradePoints': 3.64375,
-                            'count': 16,
-                        },
-                    },
-                    'termId': '2228',
-                    'termName': 'Fall 2022',
-                    'transferStatus': {
-                        'false': {
-                            'averageGradePoints': 3.8746835443037972,
-                            'count': 79,
-                        },
-                        'true': {
-                            'averageGradePoints': 3.575,
-                            'count': 4,
-                        },
-                    },
-                    'underrepresentedMinorityStatus': {
-                        'false': {
-                            'averageGradePoints': 3.8233333333333333,
-                            'count': 30,
-                        },
-                        'true': {
-                            'averageGradePoints': 3.881132075471698,
-                            'count': 53,
-                        },
+                'averageGradePoints': 2.233,
+                'count': 3,
+                'courseName': 'ASTRON 218',
+                'genders': {
+                    'female': {
+                        'averageGradePoints': 2.233,
+                        'count': 3,
+                        'medianGradePoints': 2,
                     },
                 },
-            ]
+                'internationalStatus': {
+                    'false': {
+                        'averageGradePoints': 2.233,
+                        'count': 3,
+                        'medianGradePoints': 2,
+                    },
+                    'true': {
+                        'averageGradePoints': 0,
+                        'count': 0,
+                        'medianGradePoints': 0,
+                    },
+                },
+                'medianGradePoints': 2,
+                'termId': '2225',
+                'termName': 'Summer 2022',
+                'transferStatus': {
+                    'false': {
+                        'averageGradePoints': 2.233,
+                        'count': 3,
+                        'medianGradePoints': 2,
+                    },
+                    'true': {
+                        'averageGradePoints': 0,
+                        'count': 0,
+                        'medianGradePoints': 0,
+                    },
+                },
+                'underrepresentedMinorityStatus': {
+                    'false': {
+                        'averageGradePoints': 0,
+                        'count': 0,
+                        'medianGradePoints': 0,
+                    },
+                    'true': {
+                        'averageGradePoints': 2.233,
+                        'count': 3,
+                        'medianGradePoints': 2,
+                    },
+                },
+            }
+            assert demographics_distribution[1] == {
+                'athleteStatus': {
+                    'false': {
+                        'averageGradePoints': 3.86,
+                        'count': 81,
+                        'medianGradePoints': 4.0,
+                    },
+                    'true': {
+                        'averageGradePoints': 3.85,
+                        'count': 2,
+                        'medianGradePoints': 3.85,
+                    },
+                },
+                'averageGradePoints': 3.86,
+                'count': 83,
+                'courseName': 'ASTRON 218',
+                'genders': {
+                    'female': {
+                        'averageGradePoints': 3.932,
+                        'count': 63,
+                        'medianGradePoints': 4.0,
+                    },
+                    'male': {
+                        'averageGradePoints': 3.616,
+                        'count': 19,
+                        'medianGradePoints': 4.0,
+                    },
+                    'other': {
+                        'averageGradePoints': 4.0,
+                        'count': 1,
+                        'medianGradePoints': 4.0,
+                    },
+                },
+                'internationalStatus': {
+                    'false': {
+                        'averageGradePoints': 3.912,
+                        'count': 67,
+                        'medianGradePoints': 4.0,
+                    },
+                    'true': {
+                        'averageGradePoints': 3.644,
+                        'count': 16,
+                        'medianGradePoints': 4.0,
+                    },
+                },
+                'medianGradePoints': 4,
+                'termId': '2228',
+                'termName': 'Fall 2022',
+                'transferStatus': {
+                    'false': {
+                        'averageGradePoints': 3.875,
+                        'count': 79,
+                        'medianGradePoints': 4.0,
+                    },
+                    'true': {
+                        'averageGradePoints': 3.575,
+                        'count': 4,
+                        'medianGradePoints': 4.0,
+                    },
+                },
+                'underrepresentedMinorityStatus': {
+                    'false': {
+                        'averageGradePoints': 3.823,
+                        'count': 30,
+                        'medianGradePoints': 4.0,
+                    },
+                    'true': {
+                        'averageGradePoints': 3.881,
+                        'count': 53,
+                        'medianGradePoints': 4.0,
+                    },
+                },
+            }
             assert grade_distribution == {
                 '2225': [
                     {
@@ -235,122 +256,143 @@ class TestGradeDistributions:
     def test_get_grade_distributions_small_cell_suppression(self, app):
         with override_config(app, 'NEWT_SMALL_CELL_THRESHOLD', 5), override_config(app, 'NEWT_MINIMUM_CLASS_SIZE', 0):
             demographics_distribution, grade_distribution = get_grade_distributions('2228', ['99999'])
-            assert demographics_distribution == [
-                {
-                    'athleteStatus': {
-                        'true': {
-                            'averageGradePoints': 0,
-                            'count': 0,
-                        },
-                        'false': {
-                            'averageGradePoints': 2.2333333333333334,
-                            'count': None,
-                        },
+            assert len(demographics_distribution) == 2
+            assert demographics_distribution[0] == {
+                'athleteStatus': {
+                    'true': {
+                        'averageGradePoints': 0,
+                        'count': 0,
+                        'medianGradePoints': 0,
                     },
-                    'averageGradePoints': 2.2333333333333334,
-                    'genders': {
-                        'female': {
-                            'averageGradePoints': 2.2333333333333334,
-                            'count': None,
-                        },
-                    },
-                    'internationalStatus': {
-                        'true': {
-                            'averageGradePoints': 0,
-                            'count': 0,
-                        },
-                        'false': {
-                            'averageGradePoints': 2.2333333333333334,
-                            'count': None,
-                        },
-                    },
-                    'transferStatus': {
-                        'true': {
-                            'averageGradePoints': 0,
-                            'count': 0,
-                        },
-                        'false': {
-                            'averageGradePoints': 2.2333333333333334,
-                            'count': None,
-                        },
-                    },
-                    'underrepresentedMinorityStatus': {
-                        'true': {
-                            'averageGradePoints': 2.2333333333333334,
-                            'count': None,
-                        },
-                        'false': {
-                            'averageGradePoints': 0,
-                            'count': 0,
-                        },
-                    },
-                    'count': 3,
-                    'courseName': 'ASTRON 218',
-                    'termId': '2225',
-                    'termName': 'Summer 2022',
-                },
-                {
-                    'athleteStatus': {
-                        'true': {
-                            'averageGradePoints': 3.85,
-                            'count': None,
-                        },
-                        'false': {
-                            'averageGradePoints': 3.860493827160494,
-                            'count': 81,
-                        },
-                    },
-                    'averageGradePoints': 3.8602409638554214,
-                    'count': 83,
-                    'courseName': 'ASTRON 218',
-                    'genders': {
-                        'female': {
-                            'averageGradePoints': 3.9317460317460315,
-                            'count': 63,
-                        },
-                        'male': {
-                            'averageGradePoints': 3.615789473684211,
-                            'count': 19,
-                        },
-                        'other': {
-                            'averageGradePoints': 4.0,
-                            'count': None,
-                        },
-                    },
-                    'internationalStatus': {
-                        'false': {
-                            'averageGradePoints': 3.9119402985074623,
-                            'count': 67,
-                        },
-                        'true': {
-                            'averageGradePoints': 3.64375,
-                            'count': 16,
-                        },
-                    },
-                    'termId': '2228',
-                    'termName': 'Fall 2022',
-                    'transferStatus': {
-                        'false': {
-                            'averageGradePoints': 3.8746835443037972,
-                            'count': 79,
-                        },
-                        'true': {
-                            'averageGradePoints': 3.575,
-                            'count': None,
-                        },
-                    },
-                    'underrepresentedMinorityStatus': {
-                        'false': {
-                            'averageGradePoints': 3.8233333333333333,
-                            'count': 30,
-                        },
-                        'true': {
-                            'averageGradePoints': 3.881132075471698,
-                            'count': 53,
-                        },
+                    'false': {
+                        'averageGradePoints': 2.233,
+                        'count': None,
+                        'medianGradePoints': 2,
                     },
                 },
-            ]
+                'averageGradePoints': 2.233,
+                'genders': {
+                    'female': {
+                        'averageGradePoints': 2.233,
+                        'count': None,
+                        'medianGradePoints': 2,
+                    },
+                },
+                'internationalStatus': {
+                    'true': {
+                        'averageGradePoints': 0,
+                        'count': 0,
+                        'medianGradePoints': 0,
+                    },
+                    'false': {
+                        'averageGradePoints': 2.233,
+                        'count': None,
+                        'medianGradePoints': 2,
+                    },
+                },
+                'transferStatus': {
+                    'true': {
+                        'averageGradePoints': 0,
+                        'count': 0,
+                        'medianGradePoints': 0,
+                    },
+                    'false': {
+                        'averageGradePoints': 2.233,
+                        'count': None,
+                        'medianGradePoints': 2,
+                    },
+                },
+                'underrepresentedMinorityStatus': {
+                    'true': {
+                        'averageGradePoints': 2.233,
+                        'count': None,
+                        'medianGradePoints': 2,
+                    },
+                    'false': {
+                        'averageGradePoints': 0,
+                        'count': 0,
+                        'medianGradePoints': 0,
+                    },
+                },
+                'count': 3,
+                'courseName': 'ASTRON 218',
+                'medianGradePoints': 2,
+                'termId': '2225',
+                'termName': 'Summer 2022',
+            }
+            assert demographics_distribution[1] == {
+                'athleteStatus': {
+                    'true': {
+                        'averageGradePoints': 3.85,
+                        'count': None,
+                        'medianGradePoints': 3.85,
+                    },
+                    'false': {
+                        'averageGradePoints': 3.86,
+                        'count': 81,
+                        'medianGradePoints': 4,
+                    },
+                },
+                'averageGradePoints': 3.86,
+                'count': 83,
+                'courseName': 'ASTRON 218',
+                'genders': {
+                    'female': {
+                        'averageGradePoints': 3.932,
+                        'count': 63,
+                        'medianGradePoints': 4,
+                    },
+                    'male': {
+                        'averageGradePoints': 3.616,
+                        'count': 19,
+                        'medianGradePoints': 4,
+                    },
+                    'other': {
+                        'averageGradePoints': 4.0,
+                        'count': None,
+                        'medianGradePoints': 4,
+                    },
+                },
+                'internationalStatus': {
+                    'false': {
+                        'averageGradePoints': 3.912,
+                        'count': 67,
+                        'medianGradePoints': 4,
+                    },
+                    'true': {
+                        'averageGradePoints': 3.644,
+                        'count': 16,
+                        'medianGradePoints': 4,
+                    },
+                },
+                'medianGradePoints': 4,
+                'termId': '2228',
+                'termName': 'Fall 2022',
+                'transferStatus': {
+                    'false': {
+                        'averageGradePoints': 3.875,
+                        'count': 79,
+                        'medianGradePoints': 4,
+                    },
+                    'true': {
+                        'averageGradePoints': 3.575,
+                        'count': None,
+                        'medianGradePoints': 4,
+                    },
+                },
+                'underrepresentedMinorityStatus': {
+                    'false': {
+                        'averageGradePoints': 3.823,
+                        'count': 30,
+                        'medianGradePoints': 4,
+                    },
+                    'true': {
+                        'averageGradePoints': 3.881,
+                        'count': 53,
+                        'medianGradePoints': 4,
+                    },
+                },
+            }
             assert grade_distribution == {
                 '2225': [
                     {
@@ -438,69 +480,80 @@ class TestGradeDistributions:
     def test_get_grade_distributions_min_class_size(self, app):
         with override_config(app, 'NEWT_SMALL_CELL_THRESHOLD', 0), override_config(app, 'NEWT_MINIMUM_CLASS_SIZE', 50):
             demographics_distribution, grade_distribution = get_grade_distributions('2228', ['99999'])
-            assert demographics_distribution == [
-                {
-                    'athleteStatus': {
-                        'true': {
-                            'averageGradePoints': 3.85,
-                            'count': 2,
-                        },
-                        'false': {
-                            'averageGradePoints': 3.860493827160494,
-                            'count': 81,
-                        },
+            assert len(demographics_distribution) == 1
+            assert demographics_distribution[0] == {
+                'athleteStatus': {
+                    'false': {
+                        'averageGradePoints': 3.86,
+                        'count': 81,
+                        'medianGradePoints': 4.0,
                     },
-                    'averageGradePoints': 3.8602409638554214,
-                    'count': 83,
-                    'courseName': 'ASTRON 218',
-                    'genders': {
-                        'female': {
-                            'averageGradePoints': 3.9317460317460315,
-                            'count': 63,
-                        },
-                        'male': {
-                            'averageGradePoints': 3.615789473684211,
-                            'count': 19,
-                        },
-                        'other': {
-                            'averageGradePoints': 4.0,
-                            'count': 1,
-                        },
-                    },
-                    'internationalStatus': {
-                        'false': {
-                            'averageGradePoints': 3.9119402985074623,
-                            'count': 67,
-                        },
-                        'true': {
-                            'averageGradePoints': 3.64375,
-                            'count': 16,
-                        },
-                    },
-                    'termId': '2228',
-                    'termName': 'Fall 2022',
-                    'transferStatus': {
-                        'false': {
-                            'averageGradePoints': 3.8746835443037972,
-                            'count': 79,
-                        },
-                        'true': {
-                            'averageGradePoints': 3.575,
-                            'count': 4,
-                        },
-                    },
-                    'underrepresentedMinorityStatus': {
-                        'false': {
-                            'averageGradePoints': 3.8233333333333333,
-                            'count': 30,
-                        },
-                        'true': {
-                            'averageGradePoints': 3.881132075471698,
-                            'count': 53,
-                        },
+                    'true': {
+                        'averageGradePoints': 3.85,
+                        'count': 2,
+                        'medianGradePoints': 3.85,
                     },
                 },
-            ]
+                'averageGradePoints': 3.86,
+                'count': 83,
+                'courseName': 'ASTRON 218',
+                'genders': {
+                    'female': {
+                        'averageGradePoints': 3.932,
+                        'count': 63,
+                        'medianGradePoints': 4.0,
+                    },
+                    'male': {
+                        'averageGradePoints': 3.616,
+                        'count': 19,
+                        'medianGradePoints': 4.0,
+                    },
+                    'other': {
+                        'averageGradePoints': 4.0,
+                        'count': 1,
+                        'medianGradePoints': 4.0,
+                    },
+                },
+                'internationalStatus': {
+                    'false': {
+                        'averageGradePoints': 3.912,
+                        'count': 67,
+                        'medianGradePoints': 4.0,
+                    },
+                    'true': {
+                        'averageGradePoints': 3.644,
+                        'count': 16,
+                        'medianGradePoints': 4.0,
+                    },
+                },
+                'medianGradePoints': 4,
+                'termId': '2228',
+                'termName': 'Fall 2022',
+                'transferStatus': {
+                    'false': {
+                        'averageGradePoints': 3.875,
+                        'count': 79,
+                        'medianGradePoints': 4.0,
+                    },
+                    'true': {
+                        'averageGradePoints': 3.575,
+                        'count': 4,
+                        'medianGradePoints': 4.0,
+                    },
+                },
+                'underrepresentedMinorityStatus': {
+                    'false': {
+                        'averageGradePoints': 3.823,
+                        'count': 30,
+                        'medianGradePoints': 4.0,
+                    },
+                    'true': {
+                        'averageGradePoints': 3.881,
+                        'count': 53,
+                        'medianGradePoints': 4.0,
+                    },
+                },
+            }
             assert grade_distribution == {
                 '2228': [
                     {
