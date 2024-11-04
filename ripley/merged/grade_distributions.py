@@ -25,6 +25,7 @@ ENHANCEMENTS, OR MODIFICATIONS.
 
 from copy import deepcopy
 from itertools import groupby
+from statistics import mean, median
 
 from flask import current_app as app
 from ripley.externals.data_loch import get_grades_with_demographics, get_grades_with_enrollments
@@ -34,7 +35,6 @@ from ripley.lib.util import to_percentage
 
 def get_grade_distributions(course_term_id, section_ids, instructor_uid=None):  # noqa
     demographics_distribution = {}
-    grade_totals = {}
     grade_distribution_by_term = {}
     student_grades = get_grades_with_demographics(course_term_id, section_ids, GRADE_ORDERING, instructor_uid)
 
@@ -59,18 +59,15 @@ def get_grade_distributions(course_term_id, section_ids, instructor_uid=None):  
                 continue
             if term_id not in demographics_distribution:
                 demographics_distribution[term_id] = deepcopy(EMPTY_DEMOGRAPHIC_DISTRIBUTION)
-                grade_totals[term_id] = deepcopy(EMPTY_DEMOGRAPHIC_DISTRIBUTION)
             demographics_distribution[term_id]['count'] += 1
-            demographics_distribution[term_id]['totalGradePoints'] += grade_points
+            demographics_distribution[term_id]['gradePointList'].append(grade_points)
             demographics_distribution[term_id]['courseName'] = row['sis_course_name']
 
             def _count_boolean_value(column, distribution_key):
                 if row[column]:
-                    demographics_distribution[term_id][distribution_key]['true'] += grade_points
-                    grade_totals[term_id][distribution_key]['true'] += 1
+                    demographics_distribution[term_id][distribution_key]['true'].append(grade_points)
                 else:
-                    demographics_distribution[term_id][distribution_key]['false'] += grade_points
-                    grade_totals[term_id][distribution_key]['false'] += 1
+                    demographics_distribution[term_id][distribution_key]['false'].append(grade_points)
 
             _count_boolean_value('athlete', 'athleteStatus')
             _count_boolean_value('transfer', 'transferStatus')
@@ -80,11 +77,8 @@ def get_grade_distributions(course_term_id, section_ids, instructor_uid=None):  
             def _count_string_value(value, distribution_key):
                 value = str(value) if value else 'none'
                 if value not in demographics_distribution[term_id][distribution_key]:
-                    demographics_distribution[term_id][distribution_key][value] = 0
-                if value not in grade_totals[term_id][distribution_key]:
-                    grade_totals[term_id][distribution_key][value] = 0
-                demographics_distribution[term_id][distribution_key][value] += grade_points
-                grade_totals[term_id][distribution_key][value] += 1
+                    demographics_distribution[term_id][distribution_key][value] = []
+                demographics_distribution[term_id][distribution_key][value].append(grade_points)
 
             _count_string_value(_simplify_gender(row['gender']), 'genders')
 
@@ -113,23 +107,24 @@ def get_grade_distributions(course_term_id, section_ids, instructor_uid=None):  
 enrollment count ({demographics_distribution[term_id]['count']}) falls short of minimum class size")
             continue
         for distribution_key, values in demographics_distribution[term_id].items():
-            if distribution_key in ['count', 'courseName', 'totalGradePoints']:
+            if distribution_key in ['count', 'courseName', 'gradePointList']:
                 continue
-            for distribution_value, total_grade_points in values.items():
-                student_count = grade_totals[term_id][distribution_key][distribution_value]
+            for distribution_value, grade_points_list in values.items():
+                student_count = len(grade_points_list)
                 insufficient_data = False
                 if student_count > 0 and student_count < app.config['NEWT_SMALL_CELL_THRESHOLD']:
                     app.logger.debug(f"Newt: {demographics_distribution[term_id]['courseName']} term ID {term_id} has only {student_count} \
 {distribution_key}--{distribution_value} students; value obscured in demographics chart")
                     insufficient_data = True
                 demographics_distribution[term_id][distribution_key][distribution_value] = {
-                    'averageGradePoints': (total_grade_points / student_count) if student_count > 0 else 0,
+                    'averageGradePoints': round(mean(grade_points_list), 3) if len(grade_points_list) else 0,
+                    'medianGradePoints': round(median(grade_points_list), 3) if len(grade_points_list) else 0,
                     'count': None if insufficient_data else student_count,
                 }
-        term_student_count = demographics_distribution[term_id]['count']
-        term_total_grade_points = demographics_distribution[term_id].pop('totalGradePoints', 0)
+        term_grade_point_list = demographics_distribution[term_id].pop('gradePointList', [])
         sorted_demographics_distribution.append({
-            'averageGradePoints': (term_total_grade_points / term_student_count) if term_student_count > 0 else 0,
+            'averageGradePoints': round(mean(term_grade_point_list), 3) if len(term_grade_point_list) else 0,
+            'medianGradePoints': round(median(term_grade_point_list), 3) if len(term_grade_point_list) else 0,
             **demographics_distribution[term_id],
             'termId': term_id,
             'termName': BerkeleyTerm.from_sis_term_id(term_id).to_english(),
@@ -189,23 +184,23 @@ def get_grade_distribution_with_prior_enrollments(term_id, course_name, prior_co
 EMPTY_DEMOGRAPHIC_DISTRIBUTION = {
     'genders': {},
     'athleteStatus': {
-        'true': 0,
-        'false': 0,
+        'true': [],
+        'false': [],
     },
     'internationalStatus': {
-        'true': 0,
-        'false': 0,
+        'true': [],
+        'false': [],
     },
     'transferStatus': {
-        'true': 0,
-        'false': 0,
+        'true': [],
+        'false': [],
     },
     'underrepresentedMinorityStatus': {
-        'true': 0,
-        'false': 0,
+        'true': [],
+        'false': [],
     },
     'count': 0,
-    'totalGradePoints': 0,
+    'gradePointList': [],
 }
 
 
