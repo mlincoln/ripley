@@ -36,34 +36,34 @@ class TestGradeDistributions:
             assert demographics_distribution[0] == {
                 'athleteStatus': {
                     'false': {
-                        'averageGradePoints': 2.233,
+                        'meanGradePoints': 2.233,
                         'count': 3,
                         'medianGradePoints': 2,
                     },
                     'true': {
-                        'averageGradePoints': 0,
+                        'meanGradePoints': 0,
                         'count': 0,
                         'medianGradePoints': 0,
                     },
                 },
-                'averageGradePoints': 2.233,
+                'meanGradePoints': 2.233,
                 'count': 3,
                 'courseName': 'ASTRON 218',
                 'genders': {
                     'female': {
-                        'averageGradePoints': 2.233,
+                        'meanGradePoints': 2.233,
                         'count': 3,
                         'medianGradePoints': 2,
                     },
                 },
                 'internationalStatus': {
                     'false': {
-                        'averageGradePoints': 2.233,
+                        'meanGradePoints': 2.233,
                         'count': 3,
                         'medianGradePoints': 2,
                     },
                     'true': {
-                        'averageGradePoints': 0,
+                        'meanGradePoints': 0,
                         'count': 0,
                         'medianGradePoints': 0,
                     },
@@ -73,24 +73,24 @@ class TestGradeDistributions:
                 'termName': 'Summer 2022',
                 'transferStatus': {
                     'false': {
-                        'averageGradePoints': 2.233,
+                        'meanGradePoints': 2.233,
                         'count': 3,
                         'medianGradePoints': 2,
                     },
                     'true': {
-                        'averageGradePoints': 0,
+                        'meanGradePoints': 0,
                         'count': 0,
                         'medianGradePoints': 0,
                     },
                 },
                 'underrepresentedMinorityStatus': {
                     'false': {
-                        'averageGradePoints': 0,
+                        'meanGradePoints': 0,
                         'count': 0,
                         'medianGradePoints': 0,
                     },
                     'true': {
-                        'averageGradePoints': 2.233,
+                        'meanGradePoints': 2.233,
                         'count': 3,
                         'medianGradePoints': 2,
                     },
@@ -99,44 +99,44 @@ class TestGradeDistributions:
             assert demographics_distribution[1] == {
                 'athleteStatus': {
                     'false': {
-                        'averageGradePoints': 3.86,
+                        'meanGradePoints': 3.86,
                         'count': 81,
                         'medianGradePoints': 4.0,
                     },
                     'true': {
-                        'averageGradePoints': 3.85,
+                        'meanGradePoints': 3.85,
                         'count': 2,
                         'medianGradePoints': 3.85,
                     },
                 },
-                'averageGradePoints': 3.86,
+                'meanGradePoints': 3.86,
                 'count': 83,
                 'courseName': 'ASTRON 218',
                 'genders': {
                     'female': {
-                        'averageGradePoints': 3.932,
+                        'meanGradePoints': 3.932,
                         'count': 63,
                         'medianGradePoints': 4.0,
                     },
                     'male': {
-                        'averageGradePoints': 3.616,
+                        'meanGradePoints': 3.616,
                         'count': 19,
                         'medianGradePoints': 4.0,
                     },
                     'other': {
-                        'averageGradePoints': 4.0,
+                        'meanGradePoints': 4.0,
                         'count': 1,
                         'medianGradePoints': 4.0,
                     },
                 },
                 'internationalStatus': {
                     'false': {
-                        'averageGradePoints': 3.912,
+                        'meanGradePoints': 3.912,
                         'count': 67,
                         'medianGradePoints': 4.0,
                     },
                     'true': {
-                        'averageGradePoints': 3.644,
+                        'meanGradePoints': 3.644,
                         'count': 16,
                         'medianGradePoints': 4.0,
                     },
@@ -146,24 +146,24 @@ class TestGradeDistributions:
                 'termName': 'Fall 2022',
                 'transferStatus': {
                     'false': {
-                        'averageGradePoints': 3.875,
+                        'meanGradePoints': 3.875,
                         'count': 79,
                         'medianGradePoints': 4.0,
                     },
                     'true': {
-                        'averageGradePoints': 3.575,
+                        'meanGradePoints': 3.575,
                         'count': 4,
                         'medianGradePoints': 4.0,
                     },
                 },
                 'underrepresentedMinorityStatus': {
                     'false': {
-                        'averageGradePoints': 3.823,
+                        'meanGradePoints': 3.823,
                         'count': 30,
                         'medianGradePoints': 4.0,
                     },
                     'true': {
-                        'averageGradePoints': 3.881,
+                        'meanGradePoints': 3.881,
                         'count': 53,
                         'medianGradePoints': 4.0,
                     },
@@ -260,56 +260,56 @@ class TestGradeDistributions:
             assert demographics_distribution[0] == {
                 'athleteStatus': {
                     'true': {
-                        'averageGradePoints': 0,
+                        'meanGradePoints': 0,
                         'count': 0,
                         'medianGradePoints': 0,
                     },
                     'false': {
-                        'averageGradePoints': 2.233,
+                        'meanGradePoints': 2.233,
                         'count': None,
                         'medianGradePoints': 2,
                     },
                 },
-                'averageGradePoints': 2.233,
+                'meanGradePoints': 2.233,
                 'genders': {
                     'female': {
-                        'averageGradePoints': 2.233,
+                        'meanGradePoints': 2.233,
                         'count': None,
                         'medianGradePoints': 2,
                     },
                 },
                 'internationalStatus': {
                     'true': {
-                        'averageGradePoints': 0,
+                        'meanGradePoints': 0,
                         'count': 0,
                         'medianGradePoints': 0,
                     },
                     'false': {
-                        'averageGradePoints': 2.233,
+                        'meanGradePoints': 2.233,
                         'count': None,
                         'medianGradePoints': 2,
                     },
                 },
                 'transferStatus': {
                     'true': {
-                        'averageGradePoints': 0,
+                        'meanGradePoints': 0,
                         'count': 0,
                         'medianGradePoints': 0,
                     },
                     'false': {
-                        'averageGradePoints': 2.233,
+                        'meanGradePoints': 2.233,
                         'count': None,
                         'medianGradePoints': 2,
                     },
                 },
                 'underrepresentedMinorityStatus': {
                     'true': {
-                        'averageGradePoints': 2.233,
+                        'meanGradePoints': 2.233,
                         'count': None,
                         'medianGradePoints': 2,
                     },
                     'false': {
-                        'averageGradePoints': 0,
+                        'meanGradePoints': 0,
                         'count': 0,
                         'medianGradePoints': 0,
                     },
@@ -323,44 +323,44 @@ class TestGradeDistributions:
             assert demographics_distribution[1] == {
                 'athleteStatus': {
                     'true': {
-                        'averageGradePoints': 3.85,
+                        'meanGradePoints': 3.85,
                         'count': None,
                         'medianGradePoints': 3.85,
                     },
                     'false': {
-                        'averageGradePoints': 3.86,
+                        'meanGradePoints': 3.86,
                         'count': 81,
                         'medianGradePoints': 4,
                     },
                 },
-                'averageGradePoints': 3.86,
+                'meanGradePoints': 3.86,
                 'count': 83,
                 'courseName': 'ASTRON 218',
                 'genders': {
                     'female': {
-                        'averageGradePoints': 3.932,
+                        'meanGradePoints': 3.932,
                         'count': 63,
                         'medianGradePoints': 4,
                     },
                     'male': {
-                        'averageGradePoints': 3.616,
+                        'meanGradePoints': 3.616,
                         'count': 19,
                         'medianGradePoints': 4,
                     },
                     'other': {
-                        'averageGradePoints': 4.0,
+                        'meanGradePoints': 4.0,
                         'count': None,
                         'medianGradePoints': 4,
                     },
                 },
                 'internationalStatus': {
                     'false': {
-                        'averageGradePoints': 3.912,
+                        'meanGradePoints': 3.912,
                         'count': 67,
                         'medianGradePoints': 4,
                     },
                     'true': {
-                        'averageGradePoints': 3.644,
+                        'meanGradePoints': 3.644,
                         'count': 16,
                         'medianGradePoints': 4,
                     },
@@ -370,24 +370,24 @@ class TestGradeDistributions:
                 'termName': 'Fall 2022',
                 'transferStatus': {
                     'false': {
-                        'averageGradePoints': 3.875,
+                        'meanGradePoints': 3.875,
                         'count': 79,
                         'medianGradePoints': 4,
                     },
                     'true': {
-                        'averageGradePoints': 3.575,
+                        'meanGradePoints': 3.575,
                         'count': None,
                         'medianGradePoints': 4,
                     },
                 },
                 'underrepresentedMinorityStatus': {
                     'false': {
-                        'averageGradePoints': 3.823,
+                        'meanGradePoints': 3.823,
                         'count': 30,
                         'medianGradePoints': 4,
                     },
                     'true': {
-                        'averageGradePoints': 3.881,
+                        'meanGradePoints': 3.881,
                         'count': 53,
                         'medianGradePoints': 4,
                     },
@@ -484,44 +484,44 @@ class TestGradeDistributions:
             assert demographics_distribution[0] == {
                 'athleteStatus': {
                     'false': {
-                        'averageGradePoints': 3.86,
+                        'meanGradePoints': 3.86,
                         'count': 81,
                         'medianGradePoints': 4.0,
                     },
                     'true': {
-                        'averageGradePoints': 3.85,
+                        'meanGradePoints': 3.85,
                         'count': 2,
                         'medianGradePoints': 3.85,
                     },
                 },
-                'averageGradePoints': 3.86,
+                'meanGradePoints': 3.86,
                 'count': 83,
                 'courseName': 'ASTRON 218',
                 'genders': {
                     'female': {
-                        'averageGradePoints': 3.932,
+                        'meanGradePoints': 3.932,
                         'count': 63,
                         'medianGradePoints': 4.0,
                     },
                     'male': {
-                        'averageGradePoints': 3.616,
+                        'meanGradePoints': 3.616,
                         'count': 19,
                         'medianGradePoints': 4.0,
                     },
                     'other': {
-                        'averageGradePoints': 4.0,
+                        'meanGradePoints': 4.0,
                         'count': 1,
                         'medianGradePoints': 4.0,
                     },
                 },
                 'internationalStatus': {
                     'false': {
-                        'averageGradePoints': 3.912,
+                        'meanGradePoints': 3.912,
                         'count': 67,
                         'medianGradePoints': 4.0,
                     },
                     'true': {
-                        'averageGradePoints': 3.644,
+                        'meanGradePoints': 3.644,
                         'count': 16,
                         'medianGradePoints': 4.0,
                     },
@@ -531,24 +531,24 @@ class TestGradeDistributions:
                 'termName': 'Fall 2022',
                 'transferStatus': {
                     'false': {
-                        'averageGradePoints': 3.875,
+                        'meanGradePoints': 3.875,
                         'count': 79,
                         'medianGradePoints': 4.0,
                     },
                     'true': {
-                        'averageGradePoints': 3.575,
+                        'meanGradePoints': 3.575,
                         'count': 4,
                         'medianGradePoints': 4.0,
                     },
                 },
                 'underrepresentedMinorityStatus': {
                     'false': {
-                        'averageGradePoints': 3.823,
+                        'meanGradePoints': 3.823,
                         'count': 30,
                         'medianGradePoints': 4.0,
                     },
                     'true': {
-                        'averageGradePoints': 3.881,
+                        'meanGradePoints': 3.881,
                         'count': 53,
                         'medianGradePoints': 4.0,
                     },
