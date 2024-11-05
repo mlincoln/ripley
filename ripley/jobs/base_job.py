@@ -31,6 +31,7 @@ from ripley import db
 from ripley.externals.b_connected import BConnected
 from ripley.jobs.errors import BackgroundJobError
 from ripley.lib.util import utc_now
+from ripley.models.configuration import Configuration
 from ripley.models.job import Job
 from ripley.models.job_history import JobHistory
 from sqlalchemy import text
@@ -55,7 +56,7 @@ class BaseJob:
             thread = Thread(target=self.run, kwargs=kwargs, daemon=True)
             thread.start()
 
-    def run(self, force_run=False, concurrent=False, params=None):
+    def run(self, force_run=False, concurrent=False, params=None):  # noqa C901
         with self.app_context():
             job = Job.get_job_by_key(self.key())
             if job:
@@ -67,6 +68,9 @@ class BaseJob:
 
                 elif current_instance_id and current_instance_id != job_runner_id:
                     app.logger.warn(f'Skipping job because current instance {current_instance_id} is not job runner {job_runner_id}')
+
+                elif Configuration.get().hypersleep:
+                    app.logger.warn(f'Hypersleep enabled: skipping job {self.key()}')
 
                 else:
                     running_job = JobHistory.get_running_job(job_key=self.key())
