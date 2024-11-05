@@ -117,13 +117,13 @@ enrollment count ({demographics_distribution[term_id]['count']}) falls short of 
 {distribution_key}--{distribution_value} students; value obscured in demographics chart")
                     insufficient_data = True
                 demographics_distribution[term_id][distribution_key][distribution_value] = {
-                    'averageGradePoints': round(mean(grade_points_list), 3) if len(grade_points_list) else 0,
+                    'meanGradePoints': round(mean(grade_points_list), 3) if len(grade_points_list) else 0,
                     'medianGradePoints': round(median(grade_points_list), 3) if len(grade_points_list) else 0,
                     'count': None if insufficient_data else student_count,
                 }
         term_grade_point_list = demographics_distribution[term_id].pop('gradePointList', [])
         sorted_demographics_distribution.append({
-            'averageGradePoints': round(mean(term_grade_point_list), 3) if len(term_grade_point_list) else 0,
+            'meanGradePoints': round(mean(term_grade_point_list), 3) if len(term_grade_point_list) else 0,
             'medianGradePoints': round(median(term_grade_point_list), 3) if len(term_grade_point_list) else 0,
             **demographics_distribution[term_id],
             'termId': term_id,

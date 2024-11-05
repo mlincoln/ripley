@@ -15,7 +15,7 @@
         <select
           id="grade-distribution-demographics-select"
           v-model="selectedDemographic"
-          class="grade-distribution-demographics-select justify-center w-100 my-4"
+          class="grade-distribution-demographics-select justify-center w-100 mt-4"
           :disabled="!size(gradeDistribution)"
           @change="onSelectDemographic"
         >
@@ -29,6 +29,16 @@
               {{ group.label }}
             </option>
           </template>
+        </select>
+        <select
+          id="grade-distribution-statistic-select"
+          v-model="selectedStatistic"
+          class="grade-distribution-demographics-select justify-center w-100 mt-2 mb-4"
+          :disabled="!size(gradeDistribution)"
+          @change="onSelectStatistic"
+        >
+          <option id="grade-distribution-statistic-select-mean" value="mean" selected>Mean Grade Values</option>
+          <option id="grade-distribution-statistic-select-median" value="median">Median Grade Values</option>
         </select>
       </v-col>
       <v-col
@@ -88,14 +98,14 @@
             <thead class="bg-grey-lighten-4">
               <tr>
                 <th class="font-weight-bold pl-4 py-2" scope="col">Semester</th>
-                <th class="grade-distribution-table-border font-weight-bold py-2" scope="col">Class Grade Average</th>
+                <th class="grade-distribution-table-border font-weight-bold py-2" scope="col">Class Grade {{ capitalize(selectedStatistic) }}</th>
                 <th class="text-right font-weight-bold py-2" scope="col">Class Grade Count</th>
                 <th
                   v-if="size(chartSettings.series) > 1"
                   class="grade-distribution-table-border font-weight-bold py-2"
                   scope="col"
                 >
-                  {{ selectedDemographicLabel }} Grade Average
+                  {{ selectedDemographicLabel }} Grade {{ capitalize(selectedStatistic) }}
                 </th>
                 <th
                   v-if="size(chartSettings.series) > 1"
@@ -162,7 +172,7 @@ import {mdiArrowDownCircle, mdiArrowUpCircle} from '@mdi/js'
 import {Chart} from 'highcharts-vue'
 import ChartDefinitions from '@/components/bcourses/analytics/ChartDefinitions'
 import Context from '@/mixins/Context'
-import {cloneDeep, each, get, replace, round, size} from 'lodash'
+import {capitalize, cloneDeep, each, get, replace, round, size} from 'lodash'
 
 export default {
   name: 'DemographicsChart',
@@ -234,6 +244,7 @@ export default {
       },
     },
     selectedDemographic: null,
+    selectedStatistic: 'mean',
     showChartDefinitions: false,
     showTable: false
   }),
@@ -299,17 +310,21 @@ export default {
       this.chartSettings.series[0].color = this.colors.primary
       this.chartSettings.series[0].legendSymbol = 'rectangle'
       this.chartSettings.series[0].marker = this.getSeriesMarker(this.chartSettings.series[0])
-      this.chartSettings.series[0].name = 'Overall Class Avg Grade'
+      this.chartSettings.series[0].name = `Overall Class ${capitalize(this.selectedStatistic)} Grade`
+      const dataSeries = []
+      const xAxisCategories = []
       each(this.gradeDistribution, item => {
-        this.chartSettings.series[0].data.push({
+        dataSeries.push({
           color: this.colors.primary,
           custom: {count: item.count},
-          y: round(item.averageGradePoints, 1)
+          y: round(get(item, `${this.selectedStatistic}GradePoints`), 1)
         })
-        this.chartSettings.xAxis.categories.push(this.shortTermName(item.termName))
+        xAxisCategories.push(this.shortTermName(item.termName))
       })
+      this.chartSettings.series[0].data = dataSeries
+      this.chartSettings.xAxis.categories = xAxisCategories
     },
-    onSelectDemographic() {
+    loadSecondarySeries() {
       if (this.selectedDemographic) {
         const group = get(this.selectedDemographic, 'group')
         const option = get(this.selectedDemographic, 'option')
@@ -318,7 +333,7 @@ export default {
           data: [],
           legendSymbol: 'rectangle',
           marker: this.getSeriesMarker(this.colors.secondary),
-          name: `${this.selectedDemographicLabel} Avg Grade`
+          name: `${this.selectedDemographicLabel} ${capitalize(this.selectedStatistic)} Grade`
         }
         each(this.gradeDistribution, item => {
           const value = get(item, `${group}.${option}`) || get(item, `${group}`)
@@ -330,7 +345,7 @@ export default {
             dataLabels: {
               enabled: false
             },
-            y: (value && count !== 0) ? round(get(value, 'averageGradePoints'), 1) : null
+            y: (value && count !== 0) ? round(get(value, `${this.selectedStatistic}GradePoints`), 1) : null
           }
           if (count === null) {
             point.marker = {
@@ -344,6 +359,13 @@ export default {
       } else if (this.chartSettings.series.length > 1) {
         this.chartSettings.series.pop()
       }
+    },
+    onSelectDemographic() {
+      this.loadSecondarySeries()
+    },
+    onSelectStatistic() {
+      this.loadPrimarySeries()
+      this.loadSecondarySeries()
     },
     setTooltipFormatter() {
       const courseName = this.courseName
