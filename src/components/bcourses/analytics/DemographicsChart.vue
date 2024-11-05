@@ -67,7 +67,7 @@
       <ChartDefinitions id="grade-distribution-demographics-definitions" :is-expanded="showChartDefinitions" :show-demographics="true" />
     </v-row>
     <hr aria-hidden="true" class="mb-3" />
-    <highcharts :options="chartSettings"></highcharts>
+    <highcharts ref="chart" :options="chartSettings"></highcharts>
     <v-row class="d-flex justify-center">
       <v-btn
         id="grade-distribution-demographics-show-btn"
@@ -275,6 +275,11 @@ export default {
     this.collectDemographicOptions()
     this.setTooltipFormatter()
     this.loadPrimarySeries()
+  },
+  mounted() {
+    if (this.$refs.chart.chart.xAxis[0].width / this.chartSettings.xAxis.categories.length < 75) {
+      this.chartSettings.xAxis.labels.rotation = -45
+    }
   },
   methods: {
     collectDemographicOptions() {
