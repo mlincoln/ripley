@@ -173,7 +173,8 @@ export default {
     colors: {
       primary: '#8BBDDA',
       secondary: '#DAB38B',
-      tertiary: '#C5E1F2'
+      tertiary: '#C5E1F2',
+      quaternary: '#FCCE9F'
     },
     errorMessage: undefined,
     gradeDistribution: undefined,
