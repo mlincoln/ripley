@@ -101,14 +101,14 @@
                 <th class="grade-distribution-table-border font-weight-bold py-2" scope="col">Class Grade {{ capitalize(selectedStatistic) }}</th>
                 <th class="text-right font-weight-bold py-2" scope="col">Class Grade Count</th>
                 <th
-                  v-if="size(chartSettings.series) > 1"
+                  v-if="size(chartSettings.series) > 2"
                   class="grade-distribution-table-border font-weight-bold py-2"
                   scope="col"
                 >
                   {{ selectedDemographicLabel }} Grade {{ capitalize(selectedStatistic) }}
                 </th>
                 <th
-                  v-if="size(chartSettings.series) > 1"
+                  v-if="size(chartSettings.series) > 2"
                   class="text-right font-weight-bold py-2"
                   scope="col"
                 >
@@ -132,27 +132,27 @@
                 <td :id="`grade-distro-demo-table-row-${index}-grade-0`" class="py-1">{{ chartSettings.series[0]['data'][index].y }}</td>
                 <td :id="`grade-distro-demo-table-row-${index}-count-0`" class="text-right py-1">{{ chartSettings.series[0]['data'][index].custom.count }}</td>
                 <td
-                  v-if="size(chartSettings.series) > 1"
+                  v-if="size(chartSettings.series) > 2"
                   :id="`grade-distro-demo-table-row-${index}-grade-1`"
                   class="py-1"
                 >
-                  <em v-if="chartSettings.series[1]['data'][index].custom.count === 'Small sample size'">
-                    {{ chartSettings.series[1]['data'][index].y }}
+                  <em v-if="chartSettings.series[2]['data'][index].custom.count === 'Small sample size'">
+                    {{ chartSettings.series[2]['data'][index].y }}
                   </em>
-                  <span v-if="chartSettings.series[1]['data'][index].custom.count !== 'Small sample size'">
-                    {{ chartSettings.series[1]['data'][index].y || 'No data' }}
+                  <span v-if="chartSettings.series[2]['data'][index].custom.count !== 'Small sample size'">
+                    {{ chartSettings.series[2]['data'][index].y || 'No data' }}
                   </span>
                 </td>
                 <td
-                  v-if="size(chartSettings.series) > 1"
+                  v-if="size(chartSettings.series) > 2"
                   :id="`grade-distro-demo-table-row-${index}-count-1`"
                   class="text-right py-1"
                 >
-                  <em v-if="chartSettings.series[1]['data'][index].custom.count === 'Small sample size'">
+                  <em v-if="chartSettings.series[2]['data'][index].custom.count === 'Small sample size'">
                     Small sample size
                   </em>
-                  <span v-if="chartSettings.series[1]['data'][index].custom.count !== 'Small sample size'">
-                    {{ chartSettings.series[1]['data'][index].custom.count || 'No data' }}
+                  <span v-if="chartSettings.series[2]['data'][index].custom.count !== 'Small sample size'">
+                    {{ chartSettings.series[2]['data'][index].custom.count || 'No data' }}
                   </span>
                 </td>
               </tr>
@@ -268,10 +268,13 @@ export default {
     this.chartSettings.plotOptions.series.lineWidth = 3
     this.chartSettings.title.text = 'Class Grade Average by Semester'
     this.chartSettings.tooltip.distance = 20
-    this.chartSettings.yAxis.labels.format = '{value:.1f}'
-    this.chartSettings.yAxis.max = 4
-    this.chartSettings.yAxis.min = 0
-    this.chartSettings.yAxis.tickInterval = 1
+    this.chartSettings.yAxis = [this.chartSettings.yAxis, cloneDeep(this.chartSettings.yAxis)]
+    this.chartSettings.yAxis[0].labels.format = '{value:.1f}'
+    this.chartSettings.yAxis[0].max = 4
+    this.chartSettings.yAxis[0].min = 0
+    this.chartSettings.yAxis[0].tickInterval = 1
+    this.chartSettings.yAxis[1].min = 0
+    this.chartSettings.yAxis[1].opposite = 'true'
     this.collectDemographicOptions()
     this.setTooltipFormatter()
     this.loadPrimarySeries()
@@ -312,33 +315,63 @@ export default {
     loadPrimarySeries() {
       this.chartSettings.colors = [this.colors.primary, this.colors.secondary]
       this.chartSettings.legend.enabled = size(this.gradeDistribution)
-      this.chartSettings.series[0].color = this.colors.primary
-      this.chartSettings.series[0].legendSymbol = 'rectangle'
-      this.chartSettings.series[0].marker = this.getSeriesMarker(this.chartSettings.series[0])
-      this.chartSettings.series[0].name = `Overall Class ${capitalize(this.selectedStatistic)} Grade`
-      const dataSeries = []
+      const primaryGradeSeries = {
+        data: [],
+        color: this.colors.primary,
+        legendSymbol: 'rectangle',
+        marker: this.getSeriesMarker(this.chartSettings.series[0]),
+        name: `Overall Class ${capitalize(this.selectedStatistic)} Grade`,
+        zIndex: 1
+      }
+      const primaryPopulationSeries = {
+        data: [],
+        color: this.colors.tertiary,
+        name: 'Class Grade Count',
+        type: 'area',
+        yAxis: 1,
+        zIndex: 0
+      }
       const xAxisCategories = []
+      var maxCount = 0
       each(this.gradeDistribution, item => {
-        dataSeries.push({
+        primaryGradeSeries.data.push({
           color: this.colors.primary,
           custom: {count: item.count},
           y: round(get(item, `${this.selectedStatistic}GradePoints`), 1)
         })
+        primaryPopulationSeries.data.push({
+          color: this.colors.tertiary,
+          y: item.count
+        })
+        if (item.count > maxCount) {
+          maxCount = item.count
+        }
         xAxisCategories.push(this.shortTermName(item.termName))
       })
-      this.chartSettings.series[0].data = dataSeries
       this.chartSettings.xAxis.categories = xAxisCategories
+      this.chartSettings.yAxis[1].max = maxCount * 1.25
+      this.chartSettings.series[0] = primaryGradeSeries
+      this.chartSettings.series[1] = primaryPopulationSeries
     },
     loadSecondarySeries() {
       if (this.selectedDemographic) {
         const group = get(this.selectedDemographic, 'group')
         const option = get(this.selectedDemographic, 'option')
-        const secondarySeries = {
+        const secondaryGradeSeries = {
           color: this.colors.secondary,
           data: [],
           legendSymbol: 'rectangle',
           marker: this.getSeriesMarker(this.colors.secondary),
-          name: `${this.selectedDemographicLabel} ${capitalize(this.selectedStatistic)} Grade`
+          name: `${this.selectedDemographicLabel} ${capitalize(this.selectedStatistic)} Grade`,
+          zIndex: 3
+        }
+        const secondaryPopulationSeries = {
+          color: this.colors.quaternary,
+          data: [],
+          name: `${this.selectedDemographicLabel} Grade Count`,
+          type: 'area',
+          yAxis: 1,
+          zIndex: 2
         }
         each(this.gradeDistribution, item => {
           const value = get(item, `${group}.${option}`) || get(item, `${group}`)
@@ -358,11 +391,16 @@ export default {
               radius: 3
             }
           }
-          secondarySeries.data.push(point)
+          secondaryGradeSeries.data.push(point)
+          secondaryPopulationSeries.data.push({
+            color: this.colors.quaternary,
+            y: (value && count !== 0) ? count : null
+          })
         })
-        this.chartSettings.series[1] = secondarySeries
-      } else if (this.chartSettings.series.length > 1) {
-        this.chartSettings.series.pop()
+        this.chartSettings.series[2] = secondaryGradeSeries
+        this.chartSettings.series[3] = secondaryPopulationSeries
+      } else if (this.chartSettings.series.length > 2) {
+        this.chartSettings.series = [this.chartSettings.series[0], this.chartSettings.series[1]]
       }
     },
     onSelectDemographic() {
@@ -380,7 +418,10 @@ export default {
             <div id="grade-dist-demo-tooltip-course" class="font-size-13 text-grey-darken-1 ${isDemoMode ? 'demo-mode-blur' : ''}">${courseName}</div>
             <hr aria-hidden="true" class="mt-1 grade-dist-tooltip-hr" />`
         return (this.points || []).reduce((tooltipText, point, index) => {
-          return`${tooltipText}<div id="grade-dist-demo-tooltip-series-${index}" class="font-size-13 mt-1">
+          if (point.series.name.includes('Grade Count')) {
+            return tooltipText
+          }
+          return `${tooltipText}<div id="grade-dist-demo-tooltip-series-${index}" class="font-size-13 mt-1">
             <span aria-hidden="true" class="font-size-16" style="color:${point.color}">\u25AC</span>
             ${point.series.name}: <span class="font-weight-bold">${point.y}</span>
             (${point.point.custom.count === 'Small sample size' ? 'Small sample size' : point.point.custom.count + ' students' })
