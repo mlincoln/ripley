@@ -45,12 +45,13 @@ def get_basic_attributes(uids=None):
     for r in get_users(remaining_uids):
         if remaining_uids:
             remaining_uids.discard(r['ldap_uid'])
+        affiliations = r['affiliations'] or ''
         if (
             r['person_type'] != 'A'
-            or 'STUDENT-TYPE-REGISTERED' in r['affiliations']
-            or 'STUDENT-TYPE-NOT REGISTERED' in r['affiliations']
-            or 'EMPLOYEE-TYPE' in r['affiliations']
-            or 'GUEST-TYPE' in r['affiliations']
+            or 'STUDENT-TYPE-REGISTERED' in affiliations
+            or 'STUDENT-TYPE-NOT REGISTERED' in affiliations
+            or 'EMPLOYEE-TYPE' in affiliations
+            or 'GUEST-TYPE' in affiliations
         ):
             users_by_uid[r['ldap_uid']] = r
     # If we've been given a specific set of UIDs to look for, then we can do a follow-up-call to LDAP for anyone the
