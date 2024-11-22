@@ -37,22 +37,23 @@ def main(csv_path, term_slug, app):
     with app.app_context():
         rows = sorted(csv.DictReader(open(csv_path)), key=itemgetter('grouping_id'))
 
-        # This script outputs CSV format directly to the terminal.
-        print('grouping_id,ccn,short_name,long_name,site_url')
+        with open(csv_path.replace('.csv', '-out.csv'), 'w', newline='') as outfile:
+            output = csv.DictWriter(outfile, fieldnames=['grouping_id', 'ccn', 'short_name', 'long_name', 'site_url'])
+            output.writeheader()
 
-        for grouping_id, site_rows in groupby(rows, itemgetter('grouping_id')):
-            site_rows = list(site_rows)
-            section_ids = [r['ccn'] for r in site_rows]
-            course_site_url = provision_course_site(
-                None,
-                site_rows[0]['long_name'],
-                site_rows[0]['short_name'],
-                term_slug,
-                section_ids,
-                is_admin_by_ccns=True,
-            )
-            for r in site_rows:
-                print(','.join([r['grouping_id'], r['ccn'], r['short_name'], r['long_name'], course_site_url]))
+            for grouping_id, site_rows in groupby(rows, itemgetter('grouping_id')):
+                site_rows = list(site_rows)
+                section_ids = [r['ccn'] for r in site_rows]
+                course_site_url = provision_course_site(
+                    None,
+                    site_rows[0]['long_name'],
+                    site_rows[0]['short_name'],
+                    term_slug,
+                    section_ids,
+                    is_admin_by_ccns=True,
+                )
+                for r in site_rows:
+                    output.writerow({**r, **{'site_url': course_site_url}})
 
 
 input_csv = sys.argv[1]
