@@ -26,5 +26,5 @@ export RIPLEY_LOCAL_CONFIGS="$PWD/config"
 
 echo
 echo "------------------------------------------"
-echo "Starting bCourses site provisioning from CSV..."
-"${PYTHONPATH}/python" "${app_dir}/scripts/provision_sites_from_csv.py" $1 $2
+echo "Starting bCourses site provisioning from CSV. Output will be written to ${1/.csv/-out.csv}."
+"${PYTHONPATH}/python" "${app_dir}/scripts/provision_sites_from_csv.py" $1 $2 &> /dev/null &
