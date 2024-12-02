@@ -390,6 +390,11 @@ export default {
               lineWidth: 1,
               radius: 3
             }
+          } else {
+            point.marker = {
+              lineWidth: 3,
+              radius: 5
+            }
           }
           secondaryGradeSeries.data.push(point)
           secondaryPopulationSeries.data.push({
