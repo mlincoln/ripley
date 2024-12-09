@@ -35,25 +35,39 @@ from scriptpath import scriptify
 def main(csv_path, term_slug, app):
     from ripley.lib.course_site_provisioner import provision_course_site
     with app.app_context():
+        app.logger.info('CSV course site provision job starting')
         rows = sorted(csv.DictReader(open(csv_path)), key=itemgetter('grouping_id'))
+
+        successes = 0
+        failures = 0
 
         with open(csv_path.replace('.csv', '-out.csv'), 'w', newline='') as outfile:
             output = csv.DictWriter(outfile, fieldnames=['grouping_id', 'ccn', 'short_name', 'long_name', 'site_url'])
             output.writeheader()
 
             for grouping_id, site_rows in groupby(rows, itemgetter('grouping_id')):
-                site_rows = list(site_rows)
-                section_ids = [r['ccn'] for r in site_rows]
-                course_site_url = provision_course_site(
-                    None,
-                    site_rows[0]['long_name'],
-                    site_rows[0]['short_name'],
-                    term_slug,
-                    section_ids,
-                    is_admin_by_ccns=True,
-                )
-                for r in site_rows:
-                    output.writerow({**r, **{'site_url': course_site_url}})
+                try:
+                    app.logger.info(f'CSV course site provision starting (grouping_id {grouping_id})')
+                    site_rows = list(site_rows)
+                    section_ids = [r['ccn'] for r in site_rows]
+                    course_site_url = provision_course_site(
+                        None,
+                        site_rows[0]['long_name'],
+                        site_rows[0]['short_name'],
+                        term_slug,
+                        section_ids,
+                        is_admin_by_ccns=True,
+                    )
+                    for r in site_rows:
+                        output.writerow({**r, **{'site_url': course_site_url}})
+                    app.logger.info(f'CSV course site provision succeeded (grouping_id {grouping_id})')
+                    successes += 1
+                except Exception as e:
+                    app.logger.error(f'CSV course site provision failed (grouping id {grouping_id})')
+                    app.logger.exception(e)
+                    failures += 1
+
+        app.logger.info('CSV course site provision job complete ({successes} successes, {failures} failures)')
 
 
 input_csv = sys.argv[1]
