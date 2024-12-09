@@ -75,6 +75,7 @@ CREATE TABLE sis_data.edo_enrollments
 INSERT INTO sis_data.edo_enrollments
 (sis_term_id, sis_section_id, ldap_uid, sis_enrollment_status, grade, grading_basis)
 VALUES
+('2208', '30300', '1000001', 'E', 'A', 'GRD'),
 ('2225', '10000', '1000001', 'E', 'P', 'EPN'),
 ('2225', '10000', '1000002', 'E', 'P', 'EPN'),
 ('2225', '10000', '1000003', 'E', 'P', 'EPN'),
@@ -223,6 +224,7 @@ INSERT INTO sis_data.edo_sections
 (sis_term_id, sis_section_id, is_primary, dept_name, sis_course_name, sis_course_title, sis_instruction_format, sis_section_num, allowed_units, cs_course_id, session_code, instruction_mode, primary_associated_section_id, instructor_uid, instructor_name, instructor_role_code, meeting_location, meeting_days, meeting_start_time, meeting_end_time, meeting_start_date, meeting_end_date)
 VALUES
 ('2232', '32936', TRUE, 'ANTHRO', 'ANTHRO 189', 'Our Dogs, Ourselves: Encounters between the Human and the Non-Human', 'LEC', '001', NULL, '876543', 1, 'P', NULL, '30000', 'Ash 🤖', 'PI', NULL, NULL, NULL, NULL, NULL, NULL),
+('2232', '32936', TRUE, 'ANTHRO', 'ANTHRO 189', 'Our Dogs, Ourselves: Encounters between the Human and the Non-Human', 'LEC', '001', NULL, '876543', 1, 'P', NULL, '50000', 'Denis Parker', 'TNIC', NULL, NULL, NULL, NULL, NULL, NULL),
 ('2232', '32937', TRUE, 'ANTHRO', 'ANTHRO 189', 'Our Dogs, Ourselves: Encounters between the Human and the Non-Human', 'LEC', '002', NULL, '876543', 1, 'P', NULL, '30000', 'Ash 🤖', 'PI', NULL, NULL, NULL, NULL, NULL, NULL),
 ('2225', '10000', TRUE, 'ANTHRO', 'ANTHRO 197', 'Fieldwork', 'FLD', '001', NULL, '100726', 1, 'P', NULL, '13579', 'Fitzi Ritz', 'PI', NULL, NULL, NULL, NULL, NULL, NULL),
 ('2228', '17275', TRUE, 'ANTHRO', 'ANTHRO 197', 'Fieldwork', 'FLD', '001', NULL, '100726', 1, 'P', NULL, '13579', 'Fitzi Ritz', 'PI', NULL, NULL, NULL, NULL, NULL, NULL),
@@ -236,7 +238,7 @@ VALUES
 ('2228', '32290', TRUE, 'ASTRON', 'ASTRON C228', 'Extragalactic Astronomy and Cosmology', 'LEC', '001', NULL, '124009', 1, 'P', NULL, '30000', 'Ash', 'PI', NULL, NULL, NULL, NULL, NULL, NULL),
 ('2228', '32291', TRUE, 'ASTRON', 'ASTRON C228', 'Extragalactic Astronomy and Cosmology', 'LEC', '002', NULL, '124009', 1, 'P', NULL, '30000', 'Ash', 'PI', NULL, NULL, NULL, NULL, NULL, NULL),
 ('2228', '99999', TRUE, 'ASTRON', 'ASTRON 218', 'Stellar Dynamics and Galactic Structure', 'LEC', '001', NULL, '2345678', 1, 'P', NULL, '30000', 'Ash', 'PI', NULL, NULL, NULL, NULL, NULL, NULL),
-('2208', '30300', TRUE, 'ASTRON', 'ASTRON 3', 'Introduction to Modern Cosmology', 'LEC', '001', NULL, '3456789', 1, 'P', NULL, '30000', 'Ash', 'TNIC', NULL, NULL, NULL, NULL, NULL, NULL);
+('2208', '30300', TRUE, 'ASTRON', 'ASTRON 3', 'Introduction to Modern Cosmology', 'LEC', '001', NULL, '3456789', 1, 'P', NULL, '30000', 'Ash', 'APRX', NULL, NULL, NULL, NULL, NULL, NULL);
 
 DROP SCHEMA IF EXISTS student cascade;
 

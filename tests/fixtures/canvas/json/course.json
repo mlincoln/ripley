@@ -49,7 +49,7 @@
             "id": 3030303,
             "course_code": "ASTRON 3",
             "name": "ASTRON 3: Introduction to Modern Cosmology",
-            "sis_course_id": "CRS:ASTRON-3-2022-D",
+            "sis_course_id": "CRS:ASTRON-3-2020-D",
             "account_id": 1,
             "root_account_id": 1,
             "enrollment_term_id": 1,
@@ -230,6 +230,36 @@
                     "sis_course_id": "CRS:ASTRON-218-2022-D",
                     "sis_section_id": "2022-D-99999",
                     "html_url": "https://ucberkeley.beta.instructure.com/courses/1010101/users/4567890"
+                }
+            ]
+        },
+        "status_code": 200
+    },
+    "get_enrollments_8876542_6789012": {
+        "method": "GET",
+        "endpoint": "courses/8876542/users/6789012?include=enrollments",
+        "data": {
+            "id": 6789012,
+            "name": "Denis Parker",
+            "short_name": "Denis Parker",
+            "sortable_name": "Parker, Denis",
+            "integration_id": null,
+            "login_id": "50000",
+            "sis_user_id": "300500000",
+            "enrollments": [
+                {
+                    "id": 101,
+                    "user_id": 6789012,
+                    "course_id": 8876542,
+                    "course_section_id": 10000,
+                    "type": "TAEnrollment",
+                    "enrollment_state": "active",
+                    "role": "TAEnrollment",
+                    "last_activity_at": "2023-03-02T06:04:43Z",
+                    "sis_user_id": "300500000",
+                    "sis_course_id": "CRS:ANTHRO-189-2023-B",
+                    "sis_section_id": "2023-B-32936",
+                    "html_url": "https://ucberkeley.beta.instructure.com/courses/8876542/users/6789012"
                 }
             ]
         },

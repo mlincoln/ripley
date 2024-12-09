@@ -120,20 +120,29 @@ class TestGetGradeDistribution:
             ]
 
     def test_ta(self, client, app, fake_auth):
-        """Denies TA."""
-        with requests_mock.Mocker() as m:
+        """Allows TA."""
+        with requests_mock.Mocker() as m, \
+                override_config(app, 'NEWT_SMALL_CELL_THRESHOLD', 0), \
+                override_config(app, 'NEWT_MINIMUM_CLASS_SIZE', 0):
+            canvas_site_id = '8876542'
             register_canvas_uris(app, {
                 'account': ['get_admins'],
-                'course': ['get_by_id_8876542', 'get_sections_8876542'],
+                'course': [
+                    f'get_by_id_{canvas_site_id}',
+                    f'get_enrollments_{canvas_site_id}_6789012',
+                    f'get_sections_{canvas_site_id}',
+                ],
                 'user': ['profile_50000'],
             }, m)
             canvas_site_id = '8876542'
             fake_auth.login(canvas_site_id=canvas_site_id, uid=ta_uid)
-            _api_get_grade_distributions(client, canvas_site_id, expected_status_code=401)
+            _api_get_grade_distributions(client, canvas_site_id, expected_status_code=200)
 
     def test_non_pi_teacher(self, client, app, fake_auth):
-        """Denies teacher who is not the primary instructor."""
-        with requests_mock.Mocker() as m, override_config(app, 'NEWT_SMALL_CELL_THRESHOLD', 0):
+        """Allows teacher who is not the primary instructor."""
+        with requests_mock.Mocker() as m, \
+                override_config(app, 'NEWT_SMALL_CELL_THRESHOLD', 0), \
+                override_config(app, 'NEWT_MINIMUM_CLASS_SIZE', 0):
             canvas_site_id = '3030303'
             register_canvas_uris(app, {
                 'account': ['get_admins'],
@@ -145,7 +154,7 @@ class TestGetGradeDistribution:
                 'user': ['profile_30000'],
             }, m)
             fake_auth.login(canvas_site_id=canvas_site_id, uid=teacher_uid)
-            _api_get_grade_distributions(client, canvas_site_id, expected_status_code=401)
+            _api_get_grade_distributions(client, canvas_site_id, expected_status_code=200)
 
     def test_teacher(self, client, app, fake_auth):
         """Allows teacher."""
@@ -333,19 +342,23 @@ class TestGetPriorEnrollmentGradeDistribution:
             ]
 
     def test_ta(self, client, app, fake_auth):
-        """Denies TA."""
+        """Allows TA."""
         with requests_mock.Mocker() as m:
             canvas_site_id = '8876542'
             register_canvas_uris(app, {
                 'account': ['get_admins'],
-                'course': [f'get_by_id_{canvas_site_id}'],
+                'course': [
+                    f'get_by_id_{canvas_site_id}',
+                    f'get_enrollments_{canvas_site_id}_6789012',
+                    f'get_sections_{canvas_site_id}',
+                ],
                 'user': ['profile_50000'],
             }, m)
             fake_auth.login(canvas_site_id=canvas_site_id, uid=ta_uid)
-            _api_get_prior_enrollment_grade_distribution(client, canvas_site_id, expected_status_code=401)
+            _api_get_prior_enrollment_grade_distribution(client, canvas_site_id, expected_status_code=200)
 
     def test_non_pi_teacher(self, client, app, fake_auth):
-        """Denies teacher who is not the primary instructor."""
+        """Allows teacher who is not the primary instructor."""
         with requests_mock.Mocker() as m, override_config(app, 'NEWT_SMALL_CELL_THRESHOLD', 0):
             canvas_site_id = '3030303'
             register_canvas_uris(app, {
@@ -358,7 +371,7 @@ class TestGetPriorEnrollmentGradeDistribution:
                 'user': ['profile_30000'],
             }, m)
             fake_auth.login(canvas_site_id=canvas_site_id, uid=teacher_uid)
-            _api_get_prior_enrollment_grade_distribution(client, canvas_site_id, expected_status_code=401)
+            _api_get_prior_enrollment_grade_distribution(client, canvas_site_id, expected_status_code=200)
 
     def test_teacher(self, client, app, fake_auth):
         """Allows teacher."""
@@ -527,16 +540,20 @@ class TestSearchCourses:
             assert response['results'] == ['ANTHRO 189', 'ANTHRO 197']
 
     def test_ta(self, client, app, fake_auth):
-        """Denies TA."""
+        """Allows TA."""
         with requests_mock.Mocker() as m:
+            canvas_site_id = '8876542'
             register_canvas_uris(app, {
                 'account': ['get_admins'],
-                'course': ['get_by_id_8876542', 'get_sections_8876542'],
+                'course': [
+                    f'get_by_id_{canvas_site_id}',
+                    f'get_enrollments_{canvas_site_id}_6789012',
+                    f'get_sections_{canvas_site_id}',
+                ],
                 'user': ['profile_50000'],
             }, m)
-            canvas_site_id = '8876542'
             fake_auth.login(canvas_site_id=canvas_site_id, uid=ta_uid)
-            _api_search_courses(client, expected_status_code=401)
+            _api_search_courses(client, expected_status_code=200)
 
     def test_teacher(self, client, app, fake_auth):
         """Allows teacher."""

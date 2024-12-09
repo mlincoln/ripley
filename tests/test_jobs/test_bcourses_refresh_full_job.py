@@ -40,11 +40,12 @@ class TestBcoursesRefreshFullJob:
         with setup_bcourses_refresh_job(app) as (s3, m):
             BcoursesRefreshFullJob(app)._run()
             spring_2023_enrollments_imported = read_s3_csv(app, s3, 'enrollments-TERM-2023-B-refresh-full')
-            assert len(spring_2023_enrollments_imported) == 4
+            assert len(spring_2023_enrollments_imported) == 5
             assert spring_2023_enrollments_imported[0] == 'course_id,user_id,role,section_id,status,associated_user_id'
             assert spring_2023_enrollments_imported[1] == 'CRS:ANTHRO-189-2023-B,30040000,student,SEC:2023-B-32936,active,'
             assert spring_2023_enrollments_imported[2] == 'CRS:ANTHRO-189-2023-B,30020000,student,SEC:2023-B-32936,active,'
             assert spring_2023_enrollments_imported[3] == 'CRS:ANTHRO-189-2023-B,30030000,teacher,SEC:2023-B-32936,active,'
+            assert spring_2023_enrollments_imported[4] == 'CRS:ANTHRO-189-2023-B,30050000,teacher,SEC:2023-B-32936,active,'
 
     def test_previous_export_no_change(self, app):
         with self.setup_term_enrollments_export(app) as s3:
@@ -108,6 +109,7 @@ class TestBcoursesRefreshFullJob:
             '8876542,10000,SEC:2023-B-32936,5678901,20000,30020000,StudentEnrollment,10000000,active',
             '8876542,10000,SEC:2023-B-32936,5678901,30000,30030000,TeacherEnrollment,10000000,active',
             '8876542,10000,SEC:2023-B-32936,5678901,40000,30040000,StudentEnrollment,10000000,active',
+            '8876542,10000,SEC:2023-B-32936,5678901,50000,30050000,TeacherEnrollment,10000000,active',
         ]
         with setup_bcourses_refresh_job(app) as (s3, m):
             export_file = tempfile.NamedTemporaryFile(suffix='.csv')

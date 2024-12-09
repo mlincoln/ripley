@@ -47,7 +47,7 @@ class TestDataLoch:
 
     def test_get_instructing_sections(self):
         sections = data_loch.get_instructing_sections(teacher_uid, ['2228', '2232'])
-        assert len(sections) == 10
+        assert len(sections) == 11
         section = next(s for s in sections if s['section_id'] == '12345')
         assert section['term_id'] == '2232'
         assert section['is_primary'] is True
