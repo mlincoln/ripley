@@ -66,7 +66,7 @@ def ping():
         message = f'Error during /api/ping: {subject}'
         app.logger.error(message)
         app.logger.exception(e)
-        if app.config['SEND_EMAIL_ALERT_WHEN_PING_HAS_ERROR']:
+        if app.config['SEND_EMAIL_ALERT_ON_PING_ERROR']:
             BConnected().send_system_error_email(
                 message=f'{message}\n\n<pre>{traceback.format_exc()}</pre>',
                 subject=message,
@@ -100,7 +100,7 @@ def rq_status():
         message = f'Error during /api/ping/rq: {subject}'
         app.logger.error(message)
         app.logger.exception(e)
-        if app.config['SEND_EMAIL_ALERT_WHEN_PING_HAS_ERROR']:
+        if app.config['SEND_EMAIL_ALERT_ON_PING_ERROR']:
             BConnected().send_system_error_email(
                 message=f'{message}\n\n<pre>{traceback.format_exc()}</pre>',
                 subject=message,

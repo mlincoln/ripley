@@ -100,15 +100,16 @@ class BaseJob:
                         app.logger.error(summary)
                         app.logger.exception(e)
 
-                        try:
-                            message = f'\n{summary}\n\nJob description: {self.description()}'
-                            BConnected().send_system_error_email(
-                                message=f'{message}\n\nStack trace:\n<pre>{traceback.format_exc()}</pre>',
-                                subject=f'{summary[:100]}...' if len(summary) > 100 else summary,
-                            )
-                        except Exception as e:
-                            app.logger.error('Failed to send system error email')
-                            app.logger.exception(e)
+                        if app.config['SEND_EMAIL_ALERT_ON_JOB_ERROR']:
+                            try:
+                                message = f'\n{summary}\n\nJob description: {self.description()}'
+                                BConnected().send_system_error_email(
+                                    message=f'{message}\n\nStack trace:\n<pre>{traceback.format_exc()}</pre>',
+                                    subject=f'{summary[:100]}...' if len(summary) > 100 else summary,
+                                )
+                            except Exception as e:
+                                app.logger.error('Failed to send system error email')
+                                app.logger.exception(e)
 
             else:
                 raise BackgroundJobError(f'Job {self.key()} is not registered in the database')
