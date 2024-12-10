@@ -150,7 +150,9 @@ REDIS_USE_FAKE_CLIENT = False
 SEND_EMAIL_ALERT_ENABLED = True
 SEND_EMAIL_ALERT_FROM_ADDRESS = 'rtl-ripley@berkeley.edu'
 SEND_EMAIL_ALERT_TO_ADDRESS = 'rtl-ripley-operations@lists.berkeley.edu'
-SEND_EMAIL_ALERT_WHEN_PING_HAS_ERROR = True
+SEND_EMAIL_ALERT_ON_JOB_ERROR = False
+SEND_EMAIL_ALERT_ON_PING_ERROR = False
+SEND_EMAIL_ALERT_ON_ROUTE_ERROR = False
 
 # Used to encrypt session cookie.
 SECRET_KEY = 'secret'

@@ -92,10 +92,11 @@ def register_routes(app):  # noqa C901
         else:
             message = f'{e}\n\n<pre>{traceback.format_exc()}</pre>'
             app.logger.warning(message)
-            BConnected().send_system_error_email(
-                message=message,
-                subject=f'{subject[:50]}...' if len(subject) > 50 else subject,
-            )
+            if app.config['SEND_EMAIL_ALERT_ON_ROUTE_ERROR']:
+                BConnected().send_system_error_email(
+                    message=message,
+                    subject=f'{subject[:50]}...' if len(subject) > 50 else subject,
+                )
 
         return {'message': subject}, 400
 
