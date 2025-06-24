@@ -588,9 +588,8 @@ addMentalHealthResourcesResponsiveLink();
         '</div>'
       ].join('');
 
-      waitUntilAvailable('[data-testid="files-search-input"]', false, function($searchBar) {
-        const $targetElement = $searchBar.parents().eq(9);
-        $targetElement.before(altMediaPanel);
+      waitUntilAvailable('header.ef-header', false, function($header) {
+        $header.before(altMediaPanel);
 
         // Add event listener for the toggle button to expand/collapse the content
         // and change the arrow icon.
