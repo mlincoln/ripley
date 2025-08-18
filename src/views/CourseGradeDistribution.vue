@@ -103,7 +103,6 @@ onMounted(() => {
     border-left: solid 1px $color-container-grey-border;
   }
   .pilot-notice {
-    color: $color-harley-davidson-orange;
     font-size: 15px;
     font-weight: 600;
   }
