@@ -81,7 +81,7 @@
             </ol>
             <div>
               <span>
-                For detailed instructions, see: "<OutboundLink href="https://community.canvaslms.com/docs/DOC-17330-41521116619">How do I post grades for an assignment?</OutboundLink>"
+                For detailed instructions, see: "<OutboundLink href="https://community.instructure.com/en/kb/articles/660846-how-do-i-post-grades-for-an-assignment-in-the-gradebook">How do I post grades for an assignment?</OutboundLink>"
               </span>
             </div>
             <div class="py-2">
