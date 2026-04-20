@@ -48,7 +48,7 @@ class MailingListsPage(RipleyPages):
     VIEW_SITE_LINK = By.ID, 'mailing-list-course-site-name'
     LIST_NAME_INPUT = By.ID, 'mailing-list-name-input'
     REGISTER_LIST_BUTTON = By.ID, 'btn-create-mailing-list'
-    LIST_NAME_ERROR_MSG = By.XPATH, '//div[text()="Only lowercase alphanumeric, underscore and hyphen characters allowed. "]'
+    LIST_NAME_ERROR_MSG = By.XPATH, '//div[contains(text(), "Only lowercase alphanumeric, underscore and hyphen characters allowed")]'
     LIST_NAME_TAKEN_ERROR_MSG = By.XPATH, '//div[contains(., "is used by another bCourses site and is not available")]'
 
     # View list
