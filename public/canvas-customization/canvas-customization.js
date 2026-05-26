@@ -335,7 +335,7 @@ var addCourseRetentionPolicyBanner = function() {
               z-index: 9999;
               box-sizing: border-box;
             ">
-              In accordance with the <a href="kb-article.com">bCourses Course Retention Policy</a>, this course will be archived in a read-only state in June ${archivalTier} before being removed from bCourses in June 2028. Learn about your options to <a href="kb-article.com">preserve content as an instructor</a> and <a href="kb-article.com">save coursework as a student</a>.
+              In accordance with the <a target="_blank" href="https://berkeley.service-now.com/kb/en?id=kb_article_view&sysparm_article=KB0012071">bCourses Course Retention Policy</a>, this course will be archived in a read-only state in June ${archivalTier} before being removed from bCourses in June 2028. Learn about your options to <a target="_blank" href="https://berkeley.service-now.com/kb/en?id=kb_article_view&sysparm_article=KB0012388">preserve content as an instructor</a> and <a target="_blank" href="https://berkeley.service-now.com/kb/en?id=kb_article_view&sysparm_article=KB0015455">save coursework as a student</a>.
             </div>
           `;
           $('#wrapper').prepend(bannerHtml);
