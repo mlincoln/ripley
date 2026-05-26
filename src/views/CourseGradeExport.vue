@@ -373,15 +373,15 @@ const loadExportOptions = () => {
   )
 }
 
-const loadOfficialSections = officialSections => {
-  if (!officialSections || !officialSections.length) {
+const loadOfficialSections = officialSectionsResponse => {
+  if (!officialSectionsResponse || !officialSectionsResponse.length) {
     appState.value = 'error'
     error.value = 'None of the sections within this course site are associated with UC Berkeley course catalog sections.'
     contactSupport.value = true
   } else {
-    officialSections.value = officialSections
-    if (officialSections.length === 1) {
-      selectedSection.value = officialSections[0]
+    officialSections.value = officialSectionsResponse
+    if (officialSectionsResponse.length === 1) {
+      selectedSection.value = officialSectionsResponse[0]
     } else {
       selectedSection.value = null
     }
